@@ -1,12 +1,14 @@
 package futchamp.entities;
 
 
+import futchamp.contants.Keys;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
+
+import static futchamp.contants.Keys.*;
+import static javax.persistence.CascadeType.*;
 
 @Entity
 public class Team implements Serializable {
@@ -18,6 +20,18 @@ public class Team implements Serializable {
     private String name;
 
     private String logo;
+
+    // Relacion entre entidades
+
+    // Relacion N:1 desde League
+    @ManyToOne(targetEntity = League.class, fetch = FetchType.EAGER, cascade = {MERGE, DETACH, PERSIST, REFRESH})
+    @JoinColumn(name = ID_LEAGUE, foreignKey = @ForeignKey(name = FK_LEAGUE_TEAM))
+    private League league;
+
+    // Relacion de 1:N hacia Player
+    @OneToMany(mappedBy = MAPPEDBY_TEAM, cascade = ALL, fetch = FetchType.LAZY, targetEntity = Player.class)
+    private List<Player>players;
+
 
     // Builder
     public Team() {
@@ -46,5 +60,13 @@ public class Team implements Serializable {
 
     public void setLogo(String logo) {
         this.logo = logo;
+    }
+
+    public League getLeague() {
+        return league;
+    }
+
+    public void setLeague(League league) {
+        this.league = league;
     }
 }
