@@ -1,0 +1,39 @@
+package futchamp.converters;
+
+import futchamp.entities.Coordinator;
+import futchamp.generics.GConverter;
+import futchamp.models.CoordinatorModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+import static futchamp.contants.Converters.CON_COORDINATOR;
+
+@Component(CON_COORDINATOR)
+public class CoordinatorConverter implements GConverter<CoordinatorModel, Coordinator> {
+
+    private static final Logger logCoordinator = LoggerFactory.getLogger(CoordinatorConverter.class);
+
+    @Override
+    public List<CoordinatorModel> converterListG(List<Coordinator> elementList) {
+
+        List<CoordinatorModel> coordinatorModelList = new ArrayList<>();
+        for (Coordinator c : elementList) {
+            coordinatorModelList.add(new CoordinatorModel(c));
+        }
+        logCoordinator.info("Cangando lista de coordinadores.");
+        return coordinatorModelList;
+    }
+
+    @Override
+    public CoordinatorModel converterElementG(Coordinator elemento) {
+        logCoordinator.info("Coordinador obtenido.");
+        return new CoordinatorModel(elemento);
+    }
+
+
+}

@@ -30,6 +30,9 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     //testImplementation 'org.springframework.security:spring-security-test'
+
+    // Dependencia para poder realizar encriptaciones
+    implementation group: 'org.mindrot', name: 'jbcrypt', version: '0.4'
 }
 
 test {
