@@ -6,6 +6,7 @@ import futchamp.converters.CoordinatorConverter;
 import futchamp.entities.Coordinator;
 import futchamp.generics.GService;
 import futchamp.models.CoordinatorModel;
+import futchamp.serviceSI.CoordinatorSI;
 import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +24,7 @@ import static futchamp.contants.Qualifiers.SER_COORDINATOR;
 import static futchamp.contants.Repositories.DAO_COORDINATOR;
 
 @Service(SER_COORDINATOR)
-public class CoordinatorService implements GService<CoordinatorModel, Coordinator> {
+public class CoordinatorService implements GService<CoordinatorModel, Coordinator>, CoordinatorSI {
 
     private static final Logger logCoordinatorService = LoggerFactory.getLogger(CoordinatorService.class);
 
@@ -34,6 +35,8 @@ public class CoordinatorService implements GService<CoordinatorModel, Coordinato
     @Autowired
     @Qualifier(CON_COORDINATOR)
     private CoordinatorConverter coordinatorConverter; // Clase de tipo componente para convertir de model a entidad.
+
+    // Métodos genericos
 
     @Override
     public ResponseEntity<Coordinator> addElementListG(Coordinator element) {
@@ -77,5 +80,30 @@ public class CoordinatorService implements GService<CoordinatorModel, Coordinato
     @Override
     public ResponseEntity<?> deleteElementListG(Long idElement) {
         return null;
+    }
+
+
+    // Métodos no genericos
+    @Override
+    public ResponseEntity<Boolean> verificarAutorizacion(String user, String password) {
+        try {
+            if (coordinatorDAO.existsCoordinatorByUser(user)) { // verifica la existencia del coordinador
+                Coordinator coordinator = coordinatorDAO.findCoordinatorByUser(user);
+
+                if (BCrypt.checkpw(password, coordinator.getPassword())) { // Compara las claves encriptadas
+                    logCoordinatorService.info("Clave verificada OK.");
+                    return ResponseEntity.status(HttpStatus.OK).body(Boolean.TRUE); // Si es asi, tiene acceso
+                } else {
+                    logCoordinatorService.info("Las claves no coinciden.");
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Boolean.FALSE);
+                }
+            } else {
+                logCoordinatorService.info("El nombre de usuario de coordinador no existe.");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Boolean.FALSE);
+            }
+        } catch (Exception e) {
+            logCoordinatorService.info("Error al buscar el usuario coordinador: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Boolean.FALSE);
+        }
     }
 }

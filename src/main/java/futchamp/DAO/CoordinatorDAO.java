@@ -26,4 +26,12 @@ public interface CoordinatorDAO extends JpaRepository<Coordinator, Serializable>
      * @return devuelve True si existe o False si no
      */
     boolean existsCoordinatorByUser(String user);
+
+    /**
+     * Devuelve un coordinador
+     *
+     * @param user Sera el nombre de usuario que es un dato de tipo unico.
+     * @return Sera un objeto de tipo Coordinator con los datos.
+     */
+    Coordinator findCoordinatorByUser(String user);
 }

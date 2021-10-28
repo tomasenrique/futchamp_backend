@@ -23,6 +23,7 @@ public interface Links {
      */
     String COORDINATOR = NAME_API + VERSION + SLASH + "coordinator";
     String ID_COORDINATOR = "{idCoordinator}";
+    String VERIFICATION_COORDINATOR = "verificarAutorizacion";
 
 
 }

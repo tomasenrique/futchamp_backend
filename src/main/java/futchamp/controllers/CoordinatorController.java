@@ -32,6 +32,11 @@ public class CoordinatorController {
         return coordinatorService.getAllElementListG();
     }
 
+    @GetMapping(SLASH + VERIFICATION_COORDINATOR)
+    public ResponseEntity<Boolean> verficarAutorizacion(@RequestParam String user, @RequestParam String password) {
+        return coordinatorService.verificarAutorizacion(user, password);
+    }
+
     @PutMapping(SLASH)
     public ResponseEntity<Coordinator> updateCoordinator(@RequestBody Coordinator coordinator) {
         return coordinatorService.updateElementListG(coordinator);
