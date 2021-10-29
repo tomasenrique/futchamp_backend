@@ -34,4 +34,10 @@ public class LeagueController {
     }
 
 
+    @DeleteMapping(SLASH + ID_LEAGUE)
+    public ResponseEntity<?> deleteLeague(@PathVariable Long idLeague) {
+        return leagueService.deleteElementListG(idLeague);
+    }
+
+
 }

@@ -16,18 +16,20 @@ public interface Links {
      */
     String LIST = "list";  // lista
     String REGISTER = "register";  // registro
+    String DELETE = "eliminar"; // eliminar
 
 
     /**
-     * Enlaces para las rutas de acceso para el controlador de Coordinators
+     * Enlaces para las rutas de acceso para el controlador de COORDINATOR
      */
     String COORDINATOR = NAME_API + VERSION + SLASH + "coordinator";
     String ID_COORDINATOR = "{idCoordinator}";
     String VERIFICATION_COORDINATOR = "verificarAutorizacion";
 
     /**
-     * Enlaces para las rutas de acceso para el controlador de Leagues
+     * Enlaces para las rutas de acceso para el controlador de LEAGUE
      */
     String LEAGUE = NAME_API + VERSION + SLASH + "league";
+    String ID_LEAGUE = "{idLeague}";
 
 }

@@ -74,6 +74,20 @@ public class LeagueService implements GService<LeagueModel, League> {
 
     @Override
     public ResponseEntity<?> deleteElementListG(Long idElement) {
-        return null;
+        try {
+            if (leagueDAO.existsLeagueById(idElement)) {
+                League league = leagueDAO.findById(idElement).get();
+                leagueDAO.deleteById(league.getId());
+                logLeagueService.info("League encontrada y eliminada.");
+                return ResponseEntity.status(HttpStatus.OK).body(league);
+            } else {
+                logLeagueService.info("La league a eliminar no existe.");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("La league a eliminar no existe.");
+            }
+        } catch (Exception e) {
+            logLeagueService.info("Error al eliminar la league: " + e.getMessage());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error al eliminar la league: " + e.getMessage());
+        }
+
     }
 }
