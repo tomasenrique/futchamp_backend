@@ -25,5 +25,9 @@ public interface Links {
     String ID_COORDINATOR = "{idCoordinator}";
     String VERIFICATION_COORDINATOR = "verificarAutorizacion";
 
+    /**
+     * Enlaces para las rutas de acceso para el controlador de Leagues
+     */
+    String LEAGUE = NAME_API + VERSION + SLASH + "league";
 
 }

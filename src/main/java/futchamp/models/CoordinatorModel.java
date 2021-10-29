@@ -12,7 +12,6 @@ public class CoordinatorModel implements Serializable {
     private String password;
 
     // Builder
-
     public CoordinatorModel(Coordinator coordinator) {
         this.id = coordinator.getId();
         this.user = coordinator.getUser();

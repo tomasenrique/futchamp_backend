@@ -16,7 +16,7 @@ import static futchamp.contants.Converters.CON_COORDINATOR;
 @Component(CON_COORDINATOR)
 public class CoordinatorConverter implements GConverter<CoordinatorModel, Coordinator> {
 
-    private static final Logger logCoordinator = LoggerFactory.getLogger(CoordinatorConverter.class);
+    private static final Logger logCoordinatorConverter = LoggerFactory.getLogger(CoordinatorConverter.class);
 
     @Override
     public List<CoordinatorModel> converterListG(List<Coordinator> elementList) {
@@ -25,13 +25,13 @@ public class CoordinatorConverter implements GConverter<CoordinatorModel, Coordi
         for (Coordinator c : elementList) {
             coordinatorModelList.add(new CoordinatorModel(c));
         }
-        logCoordinator.info("Cangando lista de coordinadores.");
+        logCoordinatorConverter.info("Cargando lista de coordinadores.");
         return coordinatorModelList;
     }
 
     @Override
     public CoordinatorModel converterElementG(Coordinator elemento) {
-        logCoordinator.info("Coordinador obtenido.");
+        logCoordinatorConverter.info("Coordinador obtenido.");
         return new CoordinatorModel(elemento);
     }
 

@@ -9,4 +9,5 @@ package futchamp.contants;
 public interface Repositories {
 
     String DAO_COORDINATOR = "dao_coordinator";
+    String DAO_LEAGUE = "dao_league";
 }

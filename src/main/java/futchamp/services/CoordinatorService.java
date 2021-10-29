@@ -52,7 +52,7 @@ public class CoordinatorService implements GService<CoordinatorModel, Coordinato
                 return ResponseEntity.status(HttpStatus.CREATED).body(element);
             } catch (Exception e) {
                 logCoordinatorService.info("No se pudo crear el coordinador: " + e.getMessage());
-                throw new ResponseStatusException(HttpStatus.FOUND, "El coordinador a crear ya existe: " + e.getMessage());
+                throw new ResponseStatusException(HttpStatus.FOUND, "No se pudo crear el coordinador: " + e.getMessage());
             }
         }
     }
@@ -60,11 +60,16 @@ public class CoordinatorService implements GService<CoordinatorModel, Coordinato
     @Override
     public List<CoordinatorModel> getAllElementListG() {
         try {
-            logCoordinatorService.info("Lista de coordinadores encontrada.");
-            return coordinatorConverter.converterListG(coordinatorDAO.findAll());
+            List<CoordinatorModel> coordinatorModelList = coordinatorConverter.converterListG(coordinatorDAO.findAll());
+            if (coordinatorModelList.isEmpty()) {
+                logCoordinatorService.info("Lista de coordinadores vacia.");
+            } else {
+                logCoordinatorService.info("Lista de coordinadores encontrada.");
+            }
+            return coordinatorModelList;
         } catch (Exception e) {
-            logCoordinatorService.info("Lista no encontrada: " + e.getMessage());
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No hay registros para mostrar: " + e.getMessage());
+            logCoordinatorService.info("Error al buscar la lista de coordinadores: " + e.getMessage());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error al buscar la lista de coordinadores: " + e.getMessage());
         }
     }
 
