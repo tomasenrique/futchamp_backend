@@ -10,4 +10,5 @@ public interface Repositories {
 
     String DAO_COORDINATOR = "dao_coordinator";
     String DAO_LEAGUE = "dao_league";
+    String DAO_TEAM = "dao_team";
 }

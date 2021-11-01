@@ -36,7 +36,7 @@ public class CoordinatorService implements GService<CoordinatorModel, Coordinato
     @Qualifier(CON_COORDINATOR)
     private CoordinatorConverter coordinatorConverter; // Clase de tipo componente para convertir de model a entidad.
 
-    // Métodos genericos
+    // MÉTODOS GENERICOS
 
     @Override
     public ResponseEntity<Coordinator> addElementListG(Coordinator element) {
@@ -88,9 +88,9 @@ public class CoordinatorService implements GService<CoordinatorModel, Coordinato
     }
 
 
-    // Métodos no genericos
+    // MÉTODOS NO GENERICOS
     @Override
-    public ResponseEntity<Boolean> verificarAutorizacion(String user, String password) {
+    public ResponseEntity<Boolean> verificarAutorizacionSI(String user, String password) {
         try {
             if (coordinatorDAO.existsCoordinatorByUser(user)) { // verifica la existencia del coordinador
                 Coordinator coordinator = coordinatorDAO.findCoordinatorByUser(user);

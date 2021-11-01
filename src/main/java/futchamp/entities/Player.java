@@ -15,16 +15,21 @@ public class Player implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 100)
     private String name;
 
+    @Column(length = 100)
     private String lastname;
 
+    @Column(unique = true, length = 20, nullable = false)
     private String dni;
 
+    @Column(unique = true, length = 50, nullable = false)
     private String email;
 
     private String image;
 
+    @Column(length = 150)
     private String position;
 
     private Byte dorsal;
@@ -33,7 +38,7 @@ public class Player implements Serializable {
 
     // Relacion N:1 desde Team
     @ManyToOne(targetEntity = Team.class, fetch = FetchType.EAGER, cascade = {DETACH, MERGE, PERSIST, REFRESH})
-    @JoinColumn(name = ID_TEAM, foreignKey = @ForeignKey(name = FK_TEAM_PLAYER))
+    @JoinColumn(name = ID_TEAM, foreignKey = @ForeignKey(name = FK_TEAM_PLAYER), nullable = false)
     private Team team;
 
 

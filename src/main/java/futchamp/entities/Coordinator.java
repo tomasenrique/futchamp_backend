@@ -10,10 +10,10 @@ public class Coordinator implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, length = 100)
     private String user;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, length = 100)
     private String email;
 
     @Column(nullable = false)

@@ -17,6 +17,7 @@ public class Team implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true, nullable = false)
     private String name;
 
     private String logo;
@@ -25,12 +26,12 @@ public class Team implements Serializable {
 
     // Relacion N:1 desde League
     @ManyToOne(targetEntity = League.class, fetch = FetchType.EAGER, cascade = {MERGE, DETACH, PERSIST, REFRESH})
-    @JoinColumn(name = ID_LEAGUE, foreignKey = @ForeignKey(name = FK_LEAGUE_TEAM))
+    @JoinColumn(name = ID_LEAGUE, foreignKey = @ForeignKey(name = FK_LEAGUE_TEAM), nullable = false)
     private League league;
 
     // Relacion de 1:N hacia Player
     @OneToMany(mappedBy = MAPPEDBY_TEAM, cascade = ALL, fetch = FetchType.LAZY, targetEntity = Player.class)
-    private List<Player>players;
+    private List<Player> players;
 
 
     // Builder

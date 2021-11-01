@@ -1,7 +1,6 @@
 package futchamp.DAO;
 
 import futchamp.entities.League;
-import org.hibernate.metamodel.model.convert.spi.JpaAttributeConverter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -27,5 +26,13 @@ public interface LeagueDAO extends JpaRepository<League, Serializable> {
      * @return Devuelve True si existe o False si no
      */
     boolean existsLeagueById(Long idLeague);
+
+    /**
+     * Busca una League por medio de su nombre.
+     *
+     * @param nameLeague Sera el nombre de la League que es un dato de tipo unico.
+     * @return Sera un objeto de tipo League
+     */
+    League findLeagueByName(String nameLeague);
 
 }

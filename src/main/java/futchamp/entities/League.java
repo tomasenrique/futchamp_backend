@@ -13,7 +13,7 @@ public class League implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false, length = 150)
     private String name;
 
     private String logo;

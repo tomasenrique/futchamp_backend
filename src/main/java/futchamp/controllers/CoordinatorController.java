@@ -34,7 +34,7 @@ public class CoordinatorController {
 
     @GetMapping(SLASH + VERIFICATION_COORDINATOR)
     public ResponseEntity<Boolean> verficarAutorizacion(@RequestParam String user, @RequestParam String password) {
-        return coordinatorService.verificarAutorizacion(user, password);
+        return coordinatorService.verificarAutorizacionSI(user, password);
     }
 
     @PutMapping(SLASH)

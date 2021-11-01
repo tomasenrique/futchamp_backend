@@ -2,7 +2,6 @@ package futchamp.converters;
 
 import futchamp.entities.League;
 import futchamp.generics.GConverter;
-import futchamp.models.CoordinatorModel;
 import futchamp.models.LeagueModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +30,7 @@ public class LeagueConverter implements GConverter<LeagueModel, League> {
 
     @Override
     public LeagueModel converterElementG(League elemento) {
-        logLeagueConverter.info("League obtenido");
+        logLeagueConverter.info("Cargando League.");
         return new LeagueModel(elemento);
     }
 }
