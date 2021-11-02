@@ -1,5 +1,7 @@
 package futchamp.entities;
 
+import futchamp.configuration.auditable.Auditable;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -7,7 +9,7 @@ import java.util.List;
 import static futchamp.contants.Keys.MAPPEDBY_LEAGUE;
 
 @Entity
-public class League implements Serializable {
+public class League extends Auditable implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
