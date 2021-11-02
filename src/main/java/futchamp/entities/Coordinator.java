@@ -1,10 +1,12 @@
 package futchamp.entities;
 
+import futchamp.configuration.auditable.Auditable;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-public class Coordinator implements Serializable {
+public class Coordinator extends Auditable implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

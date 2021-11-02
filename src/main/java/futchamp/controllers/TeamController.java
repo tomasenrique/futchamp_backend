@@ -27,10 +27,10 @@ public class TeamController {
         return teamService.addElementListG(team);
     }
 
-/*    @GetMapping(SLASH + LIST)
+    @GetMapping(SLASH + LIST)
     public List<TeamModel> getAllTeams() {
         return teamService.getAllElementListG();
-    }*/
+    }
 
     @GetMapping(SLASH + REGISTER + SLASH + NAME_TEAM)
     public TeamModel getTeamByName(@PathVariable String nameTeam) {
