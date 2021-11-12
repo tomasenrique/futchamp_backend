@@ -33,6 +33,16 @@ public class LeagueController {
         return leagueService.getAllElementListG();
     }
 
+    @GetMapping(SLASH + REGISTER)
+    public ResponseEntity<LeagueModel> getLeagueByName(@RequestParam String nameLeague) {
+        return leagueService.getLeagueByNameSI(nameLeague);
+    }
+
+    @PutMapping(SLASH)
+    public ResponseEntity<League> updateLeague(@RequestBody League league) {
+        return leagueService.updateElementListG(league);
+    }
+
 
     @DeleteMapping(SLASH + ID_LEAGUE)
     public ResponseEntity<?> deleteLeague(@PathVariable Long idLeague) {

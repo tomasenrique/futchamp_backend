@@ -18,7 +18,7 @@ public interface CoordinatorSI {
      * @param password Sera su contraseña.
      * @return Dato de tipo boleano, True si existe y False si no.
      */
-    ResponseEntity<Boolean> verificarAutorizacionSI(String user, String password);
+    ResponseEntity<Boolean> verifyAuthorizationUserSI(String user, String password);
 
 
     /**

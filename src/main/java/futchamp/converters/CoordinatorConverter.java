@@ -31,7 +31,7 @@ public class CoordinatorConverter implements GConverter<CoordinatorModel, Coordi
 
     @Override
     public CoordinatorModel converterElementG(Coordinator elemento) {
-        logCoordinatorConverter.info("Coordinador obtenido.");
+        logCoordinatorConverter.info("Cargando coordinador.");
         return new CoordinatorModel(elemento);
     }
 

@@ -75,14 +75,16 @@ public class CoordinatorService implements GService<CoordinatorModel, Coordinato
 
     @Override
     public ResponseEntity<Coordinator> updateElementListG(Coordinator element) {
+        // TODO == Modificar metodo para que busque por id
         try {
-            if (coordinatorDAO.existsCoordinatorByUser(element.getUser()) || coordinatorDAO.existsCoordinatorByEmail(element.getEmail())) {
-                Coordinator coordinator = coordinatorDAO.findCoordinatorByUser(element.getUser());
+            if (coordinatorDAO.existsById(element.getId())) {
+                logCoordinatorService.info("Coordinador encontrado.");
+                Coordinator coordinator = coordinatorDAO.findById(element.getId()).get();
                 coordinator.setUser(element.getUser());
                 coordinator.setEmail(element.getEmail());
                 coordinator.setPassword(BCrypt.hashpw(element.getPassword(), BCrypt.gensalt())); // Encryptado estandar a 10
                 coordinatorDAO.save(coordinator);
-                logCoordinatorService.info("Coordinador encontrado y actualizado.");
+                logCoordinatorService.info("Coordinador actualizado.");
                 return ResponseEntity.status(HttpStatus.OK).body(coordinator);
             } else {
                 logCoordinatorService.info("No existe el coordinador a actualizar.");
@@ -115,7 +117,7 @@ public class CoordinatorService implements GService<CoordinatorModel, Coordinato
 
     // MÉTODOS NO GENERICOS
     @Override
-    public ResponseEntity<Boolean> verificarAutorizacionSI(String user, String password) {
+    public ResponseEntity<Boolean> verifyAuthorizationUserSI(String user, String password) {
         try {
             if (coordinatorDAO.existsCoordinatorByUser(user)) { // verifica la existencia del coordinador
                 Coordinator coordinator = coordinatorDAO.findCoordinatorByUser(user);

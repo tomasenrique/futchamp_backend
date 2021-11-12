@@ -5,6 +5,7 @@ import futchamp.converters.LeagueConverter;
 import futchamp.entities.League;
 import futchamp.generics.GService;
 import futchamp.models.LeagueModel;
+import futchamp.serviceSI.LeagueSI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -21,7 +24,7 @@ import static futchamp.contants.Qualifiers.SER_LEAGUE;
 import static futchamp.contants.Repositories.DAO_LEAGUE;
 
 @Service(SER_LEAGUE)
-public class LeagueService implements GService<LeagueModel, League> {
+public class LeagueService implements GService<LeagueModel, League>, LeagueSI {
 
     private static final Logger logLeagueService = LoggerFactory.getLogger(LeagueService.class);
 
@@ -33,6 +36,8 @@ public class LeagueService implements GService<LeagueModel, League> {
     @Qualifier(CON_LEAGUE)
     private LeagueConverter leagueConverter; // Clase de tipo componente para convertir de model a entidad.
 
+
+    // MÉTODOS GENERICOS
 
     @Override
     public ResponseEntity<League> addElementListG(League element) {
@@ -69,13 +74,28 @@ public class LeagueService implements GService<LeagueModel, League> {
 
     @Override
     public ResponseEntity<League> updateElementListG(League element) {
-        return null;
+        try {
+            if (leagueDAO.existsById(element.getId())) {
+                League league = leagueDAO.findById(element.getId()).get();
+                league.setName(element.getName());
+                league.setLogo(element.getLogo());
+                leagueDAO.save(league);
+                logLeagueService.info("League encontrada y actualizada.");
+                return ResponseEntity.status(HttpStatus.OK).body(league);
+            } else {
+                logLeagueService.info("No existe la League a actualizar.");
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No existe la League a actualizar.");
+            }
+        } catch (Exception e) {
+            logLeagueService.info("Error al actualizar la League: " + e.getMessage());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error al actualizar la League: " + e.getMessage());
+        }
     }
 
     @Override
     public ResponseEntity<?> deleteElementListG(Long idElement) {
         try {
-            if (leagueDAO.existsLeagueById(idElement)) {
+            if (leagueDAO.existsById(idElement)) {
                 League league = leagueDAO.findById(idElement).get();
                 leagueDAO.deleteById(league.getId());
                 logLeagueService.info("League encontrada y eliminada.");
@@ -90,4 +110,24 @@ public class LeagueService implements GService<LeagueModel, League> {
         }
 
     }
+
+    // MÉTODOS NO GENERICOS
+    @Override
+    public ResponseEntity<LeagueModel> getLeagueByNameSI(String nameLeague) {
+        try {
+            if (leagueDAO.existsLeagueByName(nameLeague)) {
+                LeagueModel leagueModel = leagueConverter.converterElementG(leagueDAO.findLeagueByName(nameLeague));
+                logLeagueService.info("League encontrada.");
+                return ResponseEntity.status(HttpStatus.OK).body(leagueModel);
+            } else {
+                logLeagueService.info("No existe la liga con el nombre: " + nameLeague);
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No existe la liga con el nombre: " + nameLeague);
+            }
+        } catch (Exception e) {
+            logLeagueService.info("Error al obtener la liga: " + e.getMessage());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error al obtener la liga: " + e.getMessage());
+        }
+    }
+
+
 }

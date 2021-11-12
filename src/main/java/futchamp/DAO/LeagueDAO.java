@@ -20,14 +20,6 @@ public interface LeagueDAO extends JpaRepository<League, Serializable> {
     boolean existsLeagueByName(String name);
 
     /**
-     * Verifica que existe una League por medio de su ID
-     *
-     * @param idLeague Sera el Id de la League
-     * @return Devuelve True si existe o False si no
-     */
-    boolean existsLeagueById(Long idLeague); // TODO quitar porque ya existe un metodo por defecto
-
-    /**
      * Busca una League por medio de su nombre.
      *
      * @param nameLeague Sera el nombre de la League que es un dato de tipo unico.
