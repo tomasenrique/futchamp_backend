@@ -75,16 +75,41 @@ public class CoordinatorService implements GService<CoordinatorModel, Coordinato
 
     @Override
     public ResponseEntity<Coordinator> updateElementListG(Coordinator element) {
-
-        // TODO ==>> Aqui hay que configurar para que pida la clave para actualizar el registro
-
-
-        return null;
+        try {
+            if (coordinatorDAO.existsCoordinatorByUser(element.getUser()) || coordinatorDAO.existsCoordinatorByEmail(element.getEmail())) {
+                Coordinator coordinator = coordinatorDAO.findCoordinatorByUser(element.getUser());
+                coordinator.setUser(element.getUser());
+                coordinator.setEmail(element.getEmail());
+                coordinator.setPassword(BCrypt.hashpw(element.getPassword(), BCrypt.gensalt())); // Encryptado estandar a 10
+                coordinatorDAO.save(coordinator);
+                logCoordinatorService.info("Coordinador encontrado y actualizado.");
+                return ResponseEntity.status(HttpStatus.OK).body(coordinator);
+            } else {
+                logCoordinatorService.info("No existe el coordinador a actualizar.");
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No existe el coordinador a actualizar.");
+            }
+        } catch (Exception e) {
+            logCoordinatorService.info("Error al actualizar Coordinador: " + e.getMessage());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error al actualizar Coordinador: " + e.getMessage());
+        }
     }
 
     @Override
     public ResponseEntity<?> deleteElementListG(Long idElement) {
-        return null;
+        try {
+            if (coordinatorDAO.existsById(idElement)) {
+                Coordinator coordinator = coordinatorDAO.findById(idElement).get();
+                coordinatorDAO.deleteById(coordinator.getId());
+                logCoordinatorService.info("Coordinador encontrado y borrado.");
+                return ResponseEntity.status(HttpStatus.OK).body(coordinator);
+            } else {
+                logCoordinatorService.info("El coordinador a eliminar no existe.");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El coordinador a eliminar no existe.");
+            }
+        } catch (Exception e) {
+            logCoordinatorService.info("Error al eliminar el coordinador: " + e.getMessage());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error al eliminar el coordinador: " + e.getMessage());
+        }
     }
 
 
@@ -109,6 +134,23 @@ public class CoordinatorService implements GService<CoordinatorModel, Coordinato
         } catch (Exception e) {
             logCoordinatorService.info("Error al buscar el usuario coordinador: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Boolean.FALSE);
+        }
+    }
+
+    @Override
+    public ResponseEntity<CoordinatorModel> getCoordinatorByUserOrEmailSI(String user, String email) {
+        if (coordinatorDAO.existsCoordinatorByUser(user) || coordinatorDAO.existsCoordinatorByEmail(email)) {
+            try {
+                CoordinatorModel coordinatorModel = coordinatorConverter.converterElementG(coordinatorDAO.findCoordinatorByUserOrEmail(user, email));
+                logCoordinatorService.info("Coordinador encontrado.");
+                return ResponseEntity.status(HttpStatus.OK).body(coordinatorModel);
+            } catch (Exception e) {
+                logCoordinatorService.info("Error al buscar el coordinador: " + e.getMessage());
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error al buscar el coordinador: " + e.getMessage());
+            }
+        } else {
+            logCoordinatorService.info("No existe el coordinador buscado.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No existe el coordinador buscado.");
         }
     }
 }

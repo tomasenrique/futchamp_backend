@@ -1,7 +1,5 @@
 package futchamp.contants;
 
-import sun.security.timestamp.TSRequest;
-
 /**
  * Esta Interface Almacenara las links o rutas para acceder a la api y esta relacionada directamente con las clases
  * controller de cada entidad

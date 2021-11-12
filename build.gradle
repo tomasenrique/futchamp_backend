@@ -19,20 +19,33 @@ dependencies {
     // Dependencias necesarias para poder trabajar con JPA - HIBERNATE
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
-    //implementation 'org.springframework.boot:spring-boot-starter-security'
-    //implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    // Dependencia para usar anotacion thymeleaf para el diseño de la web
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    //implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
     // Dependencia para mysql
     runtimeOnly 'mysql:mysql-connector-java'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    //testImplementation 'org.springframework.security:spring-security-test'
 
     // Dependencia para poder realizar encriptaciones
     implementation group: 'org.mindrot', name: 'jbcrypt', version: '0.4'
+
+    // Dependencia de Bootstrap para la vista web (autocompletados de la clases)
+    // https://mvnrepository.com/artifact/org.webjars/bootstrap
+    implementation group: 'org.webjars', name: 'bootstrap', version: '5.1.3'
+
+    // Dependencia para extención de la funcionalidad del paquete estándar java.lang. para manipular la clases estandar de java
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
+
+
+    //implementation 'org.springframework.boot:spring-boot-starter-security'
+    //implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+    //testImplementation 'org.springframework.security:spring-security-test'
 }
 
 test {

@@ -34,4 +34,13 @@ public interface CoordinatorDAO extends JpaRepository<Coordinator, Serializable>
      * @return Sera un objeto de tipo Coordinator con los datos.
      */
     Coordinator findCoordinatorByUser(String user);
+
+    /**
+     * Devuelve un coordinador buscado por medio de su nombre de usuario o email
+     * 
+     * @param user  Sera el nombre de usuario, dato de tipo unico.
+     * @param email Sera el correo electronico, dato de tipo unico.
+     * @return Sera un objeto de tipo Coordinator con los datos.
+     */
+    Coordinator findCoordinatorByUserOrEmail(String user, String email);
 }

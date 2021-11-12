@@ -32,9 +32,14 @@ public class CoordinatorController {
         return coordinatorService.getAllElementListG();
     }
 
+    @GetMapping(SLASH + REGISTER)
+    public ResponseEntity<CoordinatorModel> getCoordinatorByUserOrEmail(@RequestBody Coordinator coordinator) {
+        return coordinatorService.getCoordinatorByUserOrEmailSI(coordinator.getUser(), coordinator.getPassword());
+    }
+
     @GetMapping(SLASH + VERIFICATION_COORDINATOR)
-    public ResponseEntity<Boolean> verficarAutorizacion(@RequestParam String user, @RequestParam String password) {
-        return coordinatorService.verificarAutorizacionSI(user, password);
+    public ResponseEntity<Boolean> verficarAutorizacion(@RequestBody Coordinator coordinator) {
+        return coordinatorService.verificarAutorizacionSI(coordinator.getUser(), coordinator.getPassword());
     }
 
     @PutMapping(SLASH)
