@@ -93,7 +93,8 @@ public class TeamService implements GService<TeamModel, Team>, TeamSI {
     @Override
     public ResponseEntity<?> deleteElementListG(Long idElement) {
         try {
-            if (teamDAO.existsTeamById(idElement)) {
+            //if (teamDAO.existsTeamById(idElement)) {
+            if (teamDAO.existsById(idElement)) {
                 Team team = teamDAO.findById(idElement).get();
                 teamDAO.deleteById(team.getId());
                 logTeamService.info("Equipo encontrado y elimindo.");

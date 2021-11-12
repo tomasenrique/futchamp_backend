@@ -37,12 +37,5 @@ public interface TeamDAO extends JpaRepository<Team, Serializable> {
      */
     boolean existsTeamByName(String nameTeam);
 
-    /**
-     * Verifica si existe un equipo por medio de su Id
-     *
-     * @param idTeam Sera el Id del equipo(Team)
-     * @return Devuelve True si existe o False si no
-     */
-    boolean existsTeamById(Long idTeam); // TODO quitar porque ya existe un metodo por defecto
 
 }
