@@ -33,13 +33,18 @@ public class TeamController {
     }
 
     @GetMapping(SLASH + REGISTER + SLASH + NAME_TEAM)
-    public TeamModel getTeamByName(@PathVariable String nameTeam) {
-        return teamService.mostrarEquipoPorNombreSI(nameTeam);
+    public ResponseEntity<TeamModel> getTeamByName(@PathVariable String nameTeam) {
+        return teamService.getTeamByNameSI(nameTeam);
     }
 
     @GetMapping(SLASH + LIST + SLASH + NAME_LEAGUE)
-    public List<TeamModel> getAllTeamsByNAmeLeague(@PathVariable String nameLeague) {
-        return teamService.mostrarListaEquiposPorLeagueSI(nameLeague);
+    public List<TeamModel> getAllTeamsByNameLeague(@PathVariable String nameLeague) {
+        return teamService.getAllTeamsByLeagueSI(nameLeague);
+    }
+
+    @PutMapping(SLASH)
+    public ResponseEntity<Team> updateTeam(@RequestBody Team team) {
+        return teamService.updateElementListG(team);
     }
 
     @DeleteMapping(SLASH + ID_TEAM)

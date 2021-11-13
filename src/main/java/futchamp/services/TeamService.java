@@ -87,13 +87,36 @@ public class TeamService implements GService<TeamModel, Team>, TeamSI {
 
     @Override
     public ResponseEntity<Team> updateElementListG(Team element) {
-        return null;
+        if (teamDAO.existsById(element.getId())) {
+            logTeamService.info("Equipo encontrado.");
+            if (leagueDAO.existsById(element.getLeague().getId())) {
+                logTeamService.info("League de equipo encontrada.");
+                try {
+                    Team team = teamDAO.findById(element.getId()).get();
+                    team.setName(element.getName());
+                    team.setLogo(element.getLogo());
+                    League league = leagueDAO.findById(element.getLeague().getId()).get();
+                    team.setLeague(league); // Se actualiza League del equipo
+                    teamDAO.save(team);
+                    logTeamService.info("Equipo actualizado.");
+                    return ResponseEntity.status(HttpStatus.OK).body(team);
+                } catch (Exception e) {
+                    logTeamService.info("CATCH: Error al actualizar el equipo: " + e.getMessage());
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CATCH: Error al actualizar el equipo: " + e.getMessage());
+                }
+            } else {
+                logTeamService.info("ELSE: No existe la league del equipo a actualizar");
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ELSE: No existe la league del equipo a actualizar");
+            }
+        } else {
+            logTeamService.info("ELSE: No existe el equipo a actualizar.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ELSE: No existe el equipo a actualizar.");
+        }
     }
 
     @Override
     public ResponseEntity<?> deleteElementListG(Long idElement) {
         try {
-            //if (teamDAO.existsTeamById(idElement)) {
             if (teamDAO.existsById(idElement)) {
                 Team team = teamDAO.findById(idElement).get();
                 teamDAO.deleteById(team.getId());
@@ -111,23 +134,23 @@ public class TeamService implements GService<TeamModel, Team>, TeamSI {
 
     // MÉTODOS NO GENERICOS
     @Override
-    public TeamModel mostrarEquipoPorNombreSI(String nombreEquipo) {
+    public ResponseEntity<TeamModel> getTeamByNameSI(String nameTeam) {
         try {
-            if (teamDAO.existsTeamByName(nombreEquipo)) {
+            if (teamDAO.existsTeamByName(nameTeam)) {
                 logTeamService.info("Equipo encontrado");
-                return teamConverter.converterElementG(teamDAO.findTeamByName(nombreEquipo));
+                return ResponseEntity.status(HttpStatus.OK).body(teamConverter.converterElementG(teamDAO.findTeamByName(nameTeam)));
             } else {
                 logTeamService.info("No existe equipo con ese nombre.");
-                return null; // TODO Falta terminar respuesta
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ELSE: No existe equipo con ese nombre.");
             }
         } catch (Exception e) {
             logTeamService.info("Error al buscar el equipo: " + e.getMessage());
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error al buscar el equipo: " + e.getMessage());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CATCH: Error al buscar el equipo: " + e.getMessage());
         }
     }
 
     @Override
-    public List<TeamModel> mostrarListaEquiposPorLeagueSI(String nameLeague) {
+    public List<TeamModel> getAllTeamsByLeagueSI(String nameLeague) {
         try {
             League league = leagueDAO.findLeagueByName(nameLeague);
             if (leagueDAO.existsLeagueByName(nameLeague)) {

@@ -3,6 +3,7 @@ package futchamp.serviceSI;
 import futchamp.entities.League;
 import futchamp.entities.Team;
 import futchamp.models.TeamModel;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -15,10 +16,10 @@ public interface TeamSI {
     /**
      * Busca un equipo por medio de su nombre.
      *
-     * @param nombreEquipo Sera el nombre del equipo a buscar.
+     * @param nameTeam Sera el nombre del equipo a buscar.
      * @return Sera un objeto de tipo Team(equipo)
      */
-    TeamModel mostrarEquipoPorNombreSI(String nombreEquipo);
+    ResponseEntity<TeamModel> getTeamByNameSI(String nameTeam);
 
     /**
      * Busca una lista de eauipos de una misma league.
@@ -26,6 +27,6 @@ public interface TeamSI {
      * @param nameLeague Sera el nombre de la league al que pertenecen los equipos.
      * @return Sera una lista de equipos de una misma League
      */
-    List<TeamModel> mostrarListaEquiposPorLeagueSI(String nameLeague);
+    List<TeamModel> getAllTeamsByLeagueSI(String nameLeague);
 
 }

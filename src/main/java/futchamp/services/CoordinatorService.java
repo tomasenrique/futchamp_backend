@@ -75,7 +75,6 @@ public class CoordinatorService implements GService<CoordinatorModel, Coordinato
 
     @Override
     public ResponseEntity<Coordinator> updateElementListG(Coordinator element) {
-        // TODO == Modificar metodo para que busque por id
         try {
             if (coordinatorDAO.existsById(element.getId())) {
                 logCoordinatorService.info("Coordinador encontrado.");
