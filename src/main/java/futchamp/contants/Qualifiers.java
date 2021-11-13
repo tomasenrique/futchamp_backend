@@ -9,4 +9,5 @@ public interface Qualifiers {
     String SER_COORDINATOR = "service_coordinator";
     String SER_LEAGUE = "service_league";
     String SER_TEAM = "service_team";
+    String SER_PLAYER = "service_player";
 }

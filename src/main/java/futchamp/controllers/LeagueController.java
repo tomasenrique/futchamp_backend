@@ -29,7 +29,7 @@ public class LeagueController {
     }
 
     @GetMapping(SLASH + LIST)
-    public List<LeagueModel> getAllLeagues() {
+    public ResponseEntity<List<LeagueModel>> getAllLeagues() {
         return leagueService.getAllElementListG();
     }
 

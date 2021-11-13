@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static futchamp.contants.Converters.CON_TEAM;
+import static futchamp.contants.Texts.LOADING_LIST;
+import static futchamp.contants.Texts.LOADING_REGISTER;
 
 @Component(CON_TEAM)
 public class TeamConverter implements GConverter<TeamModel, Team> {
@@ -24,13 +26,13 @@ public class TeamConverter implements GConverter<TeamModel, Team> {
         for (Team t : elementList) {
             teamModelList.add(new TeamModel(t));
         }
-        logTeamConverter.info("Cargando lista de teams.");
+        logTeamConverter.info(LOADING_LIST + "teams");
         return teamModelList;
     }
 
     @Override
     public TeamModel converterElementG(Team elemento) {
-        logTeamConverter.info("Cargando Team.");
+        logTeamConverter.info(LOADING_REGISTER + "Team");
         return new TeamModel(elemento);
     }
 }

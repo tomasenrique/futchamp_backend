@@ -42,4 +42,10 @@ public interface Links {
     String ID_TEAM = "{idTeam}";
     String NAME_TEAM = "{nameTeam}";
 
+    /**
+     * Enlaces para las rutas de acceso para el controlador de PLAYER
+     */
+
+    String PLAYER = ROUTE + "player";
+
 }

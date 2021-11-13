@@ -28,7 +28,7 @@ public class CoordinatorController {
     }
 
     @GetMapping(SLASH + LIST)
-    public List<CoordinatorModel> getAllCoordinators() {
+    public ResponseEntity<List<CoordinatorModel>> getAllCoordinators() {
         return coordinatorService.getAllElementListG();
     }
 

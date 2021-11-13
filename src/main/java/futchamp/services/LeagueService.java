@@ -28,7 +28,7 @@ public class LeagueService implements GService<LeagueModel, League>, LeagueSI {
 
     @Autowired
     @Qualifier(DAO_LEAGUE)
-    private LeagueDAO leagueDAO; // Para realizar CRUD a la BBDD
+    private LeagueDAO leagueDAO; // Para realizar CRUD a la BBDD de LEAGUE
 
     @Autowired
     @Qualifier(CON_LEAGUE)
@@ -55,7 +55,7 @@ public class LeagueService implements GService<LeagueModel, League>, LeagueSI {
     }
 
     @Override
-    public List<LeagueModel> getAllElementListG() {
+    public ResponseEntity<List<LeagueModel>> getAllElementListG() {
         try {
             List<LeagueModel> leagueModelList = leagueConverter.converterListG(leagueDAO.findAll());
             if (leagueModelList.isEmpty()) {
@@ -63,7 +63,7 @@ public class LeagueService implements GService<LeagueModel, League>, LeagueSI {
             } else {
                 logLeagueService.info("Lista de leagues encontrada.");
             }
-            return leagueModelList;
+            return ResponseEntity.status(HttpStatus.OK).body(leagueModelList);
         } catch (Exception e) {
             logLeagueService.info("Error al buscar la lista de leagues: " + e.getMessage());
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error al buscar la lista de leagues: " + e.getMessage());

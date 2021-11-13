@@ -28,7 +28,7 @@ public class TeamController {
     }
 
     @GetMapping(SLASH + LIST)
-    public List<TeamModel> getAllTeams() {
+    public ResponseEntity<List<TeamModel>> getAllTeams() {
         return teamService.getAllElementListG();
     }
 

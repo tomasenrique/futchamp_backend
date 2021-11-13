@@ -27,7 +27,8 @@ public interface GService<M, E> {
      *
      * @return Una lista de elementos de tipo modelo
      */
-    List<M> getAllElementListG();
+    // List<M> getAllElementListG();
+    ResponseEntity<List<M>> getAllElementListG();
 
     /**
      * Este metodo actualizara un registro del tipo entidad de la base de datos

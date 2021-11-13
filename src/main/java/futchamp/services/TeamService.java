@@ -70,7 +70,7 @@ public class TeamService implements GService<TeamModel, Team>, TeamSI {
     }
 
     @Override
-    public List<TeamModel> getAllElementListG() {
+    public ResponseEntity<List<TeamModel>> getAllElementListG() {
         try {
             List<TeamModel> teamModelList = teamConverter.converterListG(teamDAO.findAll());
             if (teamModelList.isEmpty()) {
@@ -78,7 +78,7 @@ public class TeamService implements GService<TeamModel, Team>, TeamSI {
             } else {
                 logTeamService.info("Lista de Teams encontrada.");
             }
-            return teamModelList;
+            return ResponseEntity.status(HttpStatus.OK).body(teamModelList);
         } catch (Exception e) {
             logTeamService.info("Error al buscar la lista de equipos: " + e.getMessage());
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error al buscar la lista de equipos: " + e.getMessage());

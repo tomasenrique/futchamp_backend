@@ -30,7 +30,7 @@ public class CoordinatorService implements GService<CoordinatorModel, Coordinato
 
     @Autowired
     @Qualifier(DAO_COORDINATOR)
-    private CoordinatorDAO coordinatorDAO; // Para realizar CRUD a la base de datos
+    private CoordinatorDAO coordinatorDAO; // Para realizar CRUD a la base de datos de COORDINATOR
 
     @Autowired
     @Qualifier(CON_COORDINATOR)
@@ -58,7 +58,7 @@ public class CoordinatorService implements GService<CoordinatorModel, Coordinato
     }
 
     @Override
-    public List<CoordinatorModel> getAllElementListG() {
+    public ResponseEntity<List<CoordinatorModel>> getAllElementListG() {
         try {
             List<CoordinatorModel> coordinatorModelList = coordinatorConverter.converterListG(coordinatorDAO.findAll());
             if (coordinatorModelList.isEmpty()) {
@@ -66,7 +66,7 @@ public class CoordinatorService implements GService<CoordinatorModel, Coordinato
             } else {
                 logCoordinatorService.info("Lista de coordinadores encontrada.");
             }
-            return coordinatorModelList;
+            return ResponseEntity.status(HttpStatus.OK).body(coordinatorModelList);
         } catch (Exception e) {
             logCoordinatorService.info("Error al buscar la lista de coordinadores: " + e.getMessage());
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error al buscar la lista de coordinadores: " + e.getMessage());

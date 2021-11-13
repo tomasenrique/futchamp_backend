@@ -12,6 +12,8 @@ import java.util.List;
 
 
 import static futchamp.contants.Converters.CON_LEAGUE;
+import static futchamp.contants.Texts.LOADING_LIST;
+import static futchamp.contants.Texts.LOADING_REGISTER;
 
 @Component(CON_LEAGUE)
 public class LeagueConverter implements GConverter<LeagueModel, League> {
@@ -24,13 +26,13 @@ public class LeagueConverter implements GConverter<LeagueModel, League> {
         for (League l : elementList) {
             leagueModelList.add(new LeagueModel(l));
         }
-        logLeagueConverter.info("Cargando lista de leagues.");
+        logLeagueConverter.info(LOADING_LIST + "leagues");
         return leagueModelList;
     }
 
     @Override
     public LeagueModel converterElementG(League elemento) {
-        logLeagueConverter.info("Cargando League.");
+        logLeagueConverter.info(LOADING_REGISTER + "League");
         return new LeagueModel(elemento);
     }
 }
