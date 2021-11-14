@@ -16,19 +16,18 @@ public interface PlayerDAO extends JpaRepository<Player, Serializable> {
     /**
      * Verifica que exista un jugador por medio de su dni
      *
-     * @param dniPlayer Sera el dato alfanumerico de tipo unico.
+     * @param dni Sera el dato alfanumerico de tipo unico.
      * @return Sera el dato de tipo boleano True si existe y False si no es así
      */
-    boolean existsPlayerByDni(String dniPlayer);
+    boolean existsPlayerByDni(String dni);
 
     /**
      * Verifica que exista un jugador por medio de su email
      *
-     * @param emailPlayer Sera el dato alfanumerico de tipo unico.
+     * @param email Sera el dato alfanumerico de tipo unico.
      * @return Sera el dato de tipo boleano True si existe y False si no es así
      */
-    boolean existsPlayerByEmail(String emailPlayer);
-
+    boolean existsPlayerByEmail(String email);
 
     /**
      * Devuelve una lista de jugadores de un mismo equipo
@@ -37,7 +36,6 @@ public interface PlayerDAO extends JpaRepository<Player, Serializable> {
      * @return Sera la lista de jugadores de un mismo equipo.
      */
     List<Player> findPlayerByTeam(Team team);
-
 
     /**
      * Obtiene un jugador por cualquiera de los dos siguientes datos.
@@ -48,15 +46,23 @@ public interface PlayerDAO extends JpaRepository<Player, Serializable> {
      */
     Player findPlayerByDniOrEmail(String dni, String email);
 
-
     /**
      * Obtiene un jugador o jugadores(lista) por medio del nombre del jugador, segun las letras que contengan este.
      * Método similar a LIKE
      *
-     * @param namePlayer Sera el nombre del jugador
+     * @param name Sera el nombre del jugador
      * @return Sera una lista con uno o varios objetos de tipo Player
      */
-    List<Player> findPlayerByNameContaining(String namePlayer);
+    List<Player> findPlayerByNameContaining(String name);
+
+    /**
+     * Obtiene un jugador o jugadores(lista) por medio del apellido del jugador, segun las letras que contengan este.
+     * Método similar a LIKE
+     *
+     * @param lastname Sera el apellido del jugador
+     * @return Sera una lista con uno o varios objetos de tipo Player
+     */
+    List<Player> findPlayerByLastnameContaining(String lastname);
 
 
 }

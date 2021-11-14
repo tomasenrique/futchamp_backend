@@ -48,5 +48,6 @@ public interface Links {
 
     String PLAYER = ROUTE + "player";
     String NAME_PLAYER = "{namePlayer}";
+    String LASTNAME_PLAYER = "{lastnamePlayer}";
 
 }

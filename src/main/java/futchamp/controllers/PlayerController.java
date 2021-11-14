@@ -3,7 +3,6 @@ package futchamp.controllers;
 import futchamp.entities.Player;
 import futchamp.models.PlayerModel;
 import futchamp.services.PlayerService;
-import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -43,9 +42,9 @@ public class PlayerController {
         return playerService.getPlayerByDniOrEmailSI(dni, email);
     }
 
-    @GetMapping(SLASH + LIST + SLASH + CONTAINING + NAME_PLAYER)
-    public ResponseEntity<List<PlayerModel>> getPlayersByNameContaining(@RequestParam String namePlayer) {
-        return playerService.getPlayersByNameContainingSI(namePlayer);
+    @GetMapping(SLASH + LIST + SLASH + CONTAINING)
+    public ResponseEntity<List<PlayerModel>> getAllPlayersByNameOrLastname(@RequestParam String name, @RequestParam String lastname) {
+        return playerService.getPlayersByNameOrLastnameContainingSI(name, lastname);
     }
 
 }

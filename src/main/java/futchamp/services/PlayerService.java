@@ -23,6 +23,8 @@ import static futchamp.contants.Converters.CON_PLAYER;
 import static futchamp.contants.Qualifiers.SER_PLAYER;
 import static futchamp.contants.Repositories.DAO_PLAYER;
 import static futchamp.contants.Repositories.DAO_TEAM;
+import static futchamp.contants.Texts.EMPTY_PLAYER_LIST;
+import static futchamp.contants.Texts.FOUND_LIST;
 
 @Service(SER_PLAYER)
 public class PlayerService implements GService<PlayerModel, Player>, PlayerSI {
@@ -136,20 +138,31 @@ public class PlayerService implements GService<PlayerModel, Player>, PlayerSI {
     }
 
     @Override
-    public ResponseEntity<List<PlayerModel>> getPlayersByNameContainingSI(String namePlayer) {
+    public ResponseEntity<List<PlayerModel>> getPlayersByNameOrLastnameContainingSI(String name, String lastname) {
         try {
-            List<PlayerModel> playerModelList = playerConverter.converterListG(playerDAO.findPlayerByNameContaining(namePlayer));
-            if (playerModelList.isEmpty()) {
-                logPlayerService.info("Lista de jugador o jugadores vacia.");
+            List<PlayerModel> playerList = null;
+            if (!name.isEmpty()) { // Verifica que el nombre no este vacio
+                playerList = playerConverter.converterListG(playerDAO.findPlayerByNameContaining(name));
+                if (playerList.isEmpty()) {
+                    logPlayerService.info(EMPTY_PLAYER_LIST);
+                } else {
+                    logPlayerService.info(FOUND_LIST + "nombre");
+                }
+            } else if (!lastname.isEmpty()) { // Verifica que el apellido no este vacio
+                playerList = playerConverter.converterListG(playerDAO.findPlayerByLastnameContaining(lastname));
+                if (playerList.isEmpty()) {
+                    logPlayerService.info(EMPTY_PLAYER_LIST);
+                } else {
+                    logPlayerService.info(FOUND_LIST + "apellido");
+                }
             } else {
-                logPlayerService.info("Encontrado jugador o jugadores.");
+                logPlayerService.info("No hay contenido a mostrar, ingresar datos");
             }
-            return ResponseEntity.status(HttpStatus.OK).body(playerModelList);
+            return ResponseEntity.status(HttpStatus.OK).body(playerList);
         } catch (Exception e) {
             logPlayerService.info("CATCH: Error al buscar el jugador o jugadores: " + e.getMessage());
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CATCH: Error al buscar el jugador o jugadores: " + e.getMessage());
         }
-
     }
 
 
