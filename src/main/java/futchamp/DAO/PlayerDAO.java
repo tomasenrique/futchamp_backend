@@ -38,4 +38,25 @@ public interface PlayerDAO extends JpaRepository<Player, Serializable> {
      */
     List<Player> findPlayerByTeam(Team team);
 
+
+    /**
+     * Obtiene un jugador por cualquiera de los dos siguientes datos.
+     *
+     * @param dni   Sera el dato alfanumerico de tipo unico del jugador.
+     * @param email Sera el correo electronico, dato de tipo unico de jugador.
+     * @return Sera el objeto Player
+     */
+    Player findPlayerByDniOrEmail(String dni, String email);
+
+
+    /**
+     * Obtiene un jugador o jugadores(lista) por medio del nombre del jugador, segun las letras que contengan este.
+     * Método similar a LIKE
+     *
+     * @param namePlayer Sera el nombre del jugador
+     * @return Sera una lista con uno o varios objetos de tipo Player
+     */
+    List<Player> findPlayerByNameContaining(String namePlayer);
+
+
 }

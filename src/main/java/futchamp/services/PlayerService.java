@@ -119,5 +119,38 @@ public class PlayerService implements GService<PlayerModel, Player>, PlayerSI {
         }
     }
 
+    @Override
+    public ResponseEntity<PlayerModel> getPlayerByDniOrEmailSI(String dni, String email) {
+        if (playerDAO.existsPlayerByDni(dni) || playerDAO.existsPlayerByEmail(email)) {
+            try {
+                logPlayerService.info("Encontrado jugador por medio de su dni o email.");
+                return ResponseEntity.status(HttpStatus.OK).body(playerConverter.converterElementG(playerDAO.findPlayerByDniOrEmail(dni, email)));
+            } catch (Exception e) {
+                logPlayerService.info("CATCH: Error al buscar el jugador por medio de su dni o email: " + e.getMessage());
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CATCH: Error al buscar el jugador por medio de su dni o email: " + e.getMessage());
+            }
+        } else {
+            logPlayerService.info("ELSE: No existe el jugador buscado.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ELSE: No existe el jugador buscado.");
+        }
+    }
+
+    @Override
+    public ResponseEntity<List<PlayerModel>> getPlayersByNameContainingSI(String namePlayer) {
+        try {
+            List<PlayerModel> playerModelList = playerConverter.converterListG(playerDAO.findPlayerByNameContaining(namePlayer));
+            if (playerModelList.isEmpty()) {
+                logPlayerService.info("Lista de jugador o jugadores vacia.");
+            } else {
+                logPlayerService.info("Encontrado jugador o jugadores.");
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(playerModelList);
+        } catch (Exception e) {
+            logPlayerService.info("CATCH: Error al buscar el jugador o jugadores: " + e.getMessage());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CATCH: Error al buscar el jugador o jugadores: " + e.getMessage());
+        }
+
+    }
+
 
 }

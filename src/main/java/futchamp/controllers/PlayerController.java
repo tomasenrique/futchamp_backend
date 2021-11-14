@@ -38,5 +38,14 @@ public class PlayerController {
         return playerService.getAllPlayersByNameTeamSI(nameTeam);
     }
 
+    @GetMapping(SLASH + REGISTER)
+    public ResponseEntity<PlayerModel> getPlayerByDniOrEmail(@RequestParam String dni, @RequestParam String email) {
+        return playerService.getPlayerByDniOrEmailSI(dni, email);
+    }
+
+    @GetMapping(SLASH + LIST + SLASH + CONTAINING + NAME_PLAYER)
+    public ResponseEntity<List<PlayerModel>> getPlayersByNameContaining(@RequestParam String namePlayer) {
+        return playerService.getPlayersByNameContainingSI(namePlayer);
+    }
 
 }

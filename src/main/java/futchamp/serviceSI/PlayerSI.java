@@ -1,5 +1,6 @@
 package futchamp.serviceSI;
 
+import futchamp.entities.Player;
 import futchamp.models.PlayerModel;
 import org.springframework.http.ResponseEntity;
 
@@ -15,8 +16,28 @@ public interface PlayerSI {
      * Obtiene una lista de jugadores de un mismo equipo por medio de su nombre
      *
      * @param nameTeam Sera el nombre del equipo que es un dato de tipo unico.
-     * @return Sera una lista de juagdores de un mismo equipo.
+     * @return Sera una lista de jugadores de un mismo equipo de tipo Model
      */
     ResponseEntity<List<PlayerModel>> getAllPlayersByNameTeamSI(String nameTeam);
+
+
+    /**
+     * Obtiene un jugador por medio de su dni o su email
+     *
+     * @param dni   Sera el documento de identidad del jugador
+     * @param email Sera el correo electronico del jugador
+     * @return Sera un objeto de tipo Model del jugador
+     */
+    ResponseEntity<PlayerModel> getPlayerByDniOrEmailSI(String dni, String email);
+
+
+    /**
+     * Obtiene un jugador o jugadores(lista) por medio del nombre del jugador, segun las letras que contengan este.
+     * Método similar a LIKE
+     *
+     * @param namePlayer Sera el nombre del jugador
+     * @return Sera una lista con uno o varios objetos de tipo PlayerModel
+     */
+    ResponseEntity<List<PlayerModel>> getPlayersByNameContainingSI(String namePlayer);
 
 }

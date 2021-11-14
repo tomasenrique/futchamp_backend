@@ -18,7 +18,7 @@ public interface Links {
     String LIST = "list";  // lista
     String REGISTER = "register";  // registro
     String DELETE = "eliminar"; // eliminar
-
+    String CONTAINING = "containing"; // Similar a LIKE en SQL
 
     /**
      * Enlaces para las rutas de acceso para el controlador de COORDINATOR
@@ -47,5 +47,6 @@ public interface Links {
      */
 
     String PLAYER = ROUTE + "player";
+    String NAME_PLAYER = "{namePlayer}";
 
 }
