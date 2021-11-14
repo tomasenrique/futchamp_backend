@@ -28,12 +28,15 @@ public class PlayerController {
         return playerService.addElementListG(player);
     }
 
-
     @GetMapping(SLASH + LIST)
-    public ResponseEntity<List<PlayerModel>> getAllplayers() {
+    public ResponseEntity<List<PlayerModel>> getAllPlayers() {
         return playerService.getAllElementListG();
     }
 
+    @GetMapping(SLASH + LIST + SLASH + NAME_TEAM)
+    public ResponseEntity<List<PlayerModel>> getAllPlayerByNameTeam(@PathVariable String nameTeam) {
+        return playerService.getAllPlayersByNameTeamSI(nameTeam);
+    }
 
 
 }

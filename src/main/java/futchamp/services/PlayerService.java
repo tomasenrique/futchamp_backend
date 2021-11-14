@@ -95,5 +95,29 @@ public class PlayerService implements GService<PlayerModel, Player>, PlayerSI {
         return null;
     }
 
+
     // MÉTODOS NO GENERICOS
+    @Override
+    public ResponseEntity<List<PlayerModel>> getAllPlayersByNameTeamSI(String nameTeam) {
+        if (teamDAO.existsTeamByName(nameTeam)) {
+            try {
+                Team team = teamDAO.findTeamByName(nameTeam);
+                List<PlayerModel> playerModelList = playerConverter.converterListG(playerDAO.findPlayerByTeam(team));
+                if (playerModelList.isEmpty()) {
+                    logPlayerService.info("Lista de jugadores por equipo vacia.");
+                } else {
+                    logPlayerService.info("Lista de jugadores por equipo encontrada.");
+                }
+                return ResponseEntity.status(HttpStatus.OK).body(playerModelList);
+            } catch (Exception e) {
+                logPlayerService.info("CATCH: Error al buscar la lista de jugadores de un mismo equipo: " + e.getMessage());
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CATCH: Error al buscar la lista de jugadores de un mismo equipo: " + e.getMessage());
+            }
+        } else {
+            logPlayerService.info("ELSE: No existe el equipo buscado.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ELSE: No existe el equipo buscado.");
+        }
+    }
+
+
 }
