@@ -89,12 +89,46 @@ public class PlayerService implements GService<PlayerModel, Player>, PlayerSI {
 
     @Override
     public ResponseEntity<Player> updateElementListG(Player element) {
-        return null;
+        try {
+            if (playerDAO.existsById(element.getId()) && teamDAO.existsTeamByName(element.getTeam().getName())) {
+                Player player = playerDAO.findById(element.getId()).get();
+                player.setName(element.getName());
+                player.setLastname(element.getLastname());
+                player.setDni(element.getDni());
+                player.setEmail(element.getEmail());
+                player.setImage(element.getImage());
+                player.setPosition(element.getPosition());
+                player.setDorsal(element.getDorsal());
+                player.setTeam(teamDAO.findTeamByName(element.getTeam().getName()));
+                playerDAO.save(player);
+                logPlayerService.info("Jugador actualizado.");
+                return ResponseEntity.status(HttpStatus.OK).body(player);
+            } else {
+                logPlayerService.info("ELSE: No existe el jugador a actualizar.");
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ELSE: No existe el jugador a actualizar.");
+            }
+        } catch (Exception e) {
+            logPlayerService.info("CATCH: Error al actualizar el jugador: " + e.getMessage());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CATCH: Error al actualizar el jugador: " + e.getMessage());
+        }
     }
 
     @Override
     public ResponseEntity<?> deleteElementListG(Long idElement) {
-        return null;
+        try {
+            if (playerDAO.existsById(idElement)) {
+                Player player = playerDAO.findById(idElement).get();
+                playerDAO.delete(player);
+                logPlayerService.info("Jugadoro encontrado y eliminado.");
+                return ResponseEntity.status(HttpStatus.OK).body(player);
+            } else {
+                logPlayerService.info("ELSE: No existe el jugador a eliminar.");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ELSE: No existe el jugador a eliminar.");
+            }
+        } catch (Exception e) {
+            logPlayerService.info("CATCH: Error al eliminar el jugador: " + e.getMessage());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CATCH: Error al eliminar el jugador: " + e.getMessage());
+        }
     }
 
 

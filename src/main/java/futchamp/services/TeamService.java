@@ -119,7 +119,7 @@ public class TeamService implements GService<TeamModel, Team>, TeamSI {
         try {
             if (teamDAO.existsById(idElement)) {
                 Team team = teamDAO.findById(idElement).get();
-                teamDAO.deleteById(team.getId());
+                teamDAO.delete(team);
                 logTeamService.info("Equipo encontrado y elimindo.");
                 return ResponseEntity.status(HttpStatus.OK).body(team);
             } else {

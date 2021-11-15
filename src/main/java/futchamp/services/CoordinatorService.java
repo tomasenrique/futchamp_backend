@@ -100,7 +100,7 @@ public class CoordinatorService implements GService<CoordinatorModel, Coordinato
         try {
             if (coordinatorDAO.existsById(idElement)) {
                 Coordinator coordinator = coordinatorDAO.findById(idElement).get();
-                coordinatorDAO.deleteById(coordinator.getId());
+                coordinatorDAO.delete(coordinator);
                 logCoordinatorService.info("Coordinador encontrado y borrado.");
                 return ResponseEntity.status(HttpStatus.OK).body(coordinator);
             } else {

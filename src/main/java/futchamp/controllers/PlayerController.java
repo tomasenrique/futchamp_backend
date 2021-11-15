@@ -47,4 +47,14 @@ public class PlayerController {
         return playerService.getPlayersByNameOrLastnameContainingSI(name, lastname);
     }
 
+    @PutMapping(SLASH)
+    public ResponseEntity<Player> updatePlayer(@RequestBody Player player) {
+        return playerService.updateElementListG(player);
+    }
+
+    @DeleteMapping(SLASH + ID_PLAYER )
+    public ResponseEntity<?> deletePlayer(@PathVariable Long idPLayer) {
+        return playerService.deleteElementListG(idPLayer);
+    }
+
 }

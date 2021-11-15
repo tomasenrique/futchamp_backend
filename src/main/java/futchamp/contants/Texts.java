@@ -12,4 +12,6 @@ public interface Texts {
     String EMPTY_PLAYER_LIST = "Lista de jugador o jugadores vacia";
 
 
+
+
 }

@@ -95,7 +95,7 @@ public class LeagueService implements GService<LeagueModel, League>, LeagueSI {
         try {
             if (leagueDAO.existsById(idElement)) {
                 League league = leagueDAO.findById(idElement).get();
-                leagueDAO.deleteById(league.getId());
+                leagueDAO.delete(league);
                 logLeagueService.info("League encontrada y eliminada.");
                 return ResponseEntity.status(HttpStatus.OK).body(league);
             } else {
