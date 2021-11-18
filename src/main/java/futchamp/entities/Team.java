@@ -2,7 +2,6 @@ package futchamp.entities;
 
 
 import futchamp.configuration.auditable.Auditable;
-import futchamp.contants.Keys;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,6 +9,7 @@ import java.util.List;
 
 import static futchamp.contants.Keys.*;
 import static javax.persistence.CascadeType.*;
+import static javax.persistence.FetchType.LAZY;
 
 @Entity
 public class Team extends Auditable implements Serializable {
@@ -31,8 +31,16 @@ public class Team extends Auditable implements Serializable {
     private League league;
 
     // Relacion de 1:N hacia Player
-    @OneToMany(mappedBy = MAPPEDBY_TEAM, cascade = ALL, fetch = FetchType.LAZY, targetEntity = Player.class)
+    @OneToMany(mappedBy = MAPPEDBY_TEAM, cascade = ALL, fetch = LAZY, targetEntity = Player.class)
     private List<Player> players;
+
+    // Relación 1:N hacia Match (Partido local)
+    @OneToMany(mappedBy = MAPPEDBY_TEAM_LOCAL, cascade = {MERGE, DETACH, PERSIST, REFRESH}, fetch = LAZY, targetEntity = Match.class)
+    private List<Team> teamListLocal;
+
+    // Relación 1:N hacia Match (Partido visitor)
+    @OneToMany(mappedBy = MAPPEDBY_TEAM_VISITOR, cascade = {MERGE, DETACH, PERSIST, REFRESH}, fetch = LAZY, targetEntity = Match.class)
+    private List<Team> teamListVisitor;
 
 
     // Builder
