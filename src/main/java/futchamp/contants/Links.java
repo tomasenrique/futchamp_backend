@@ -51,4 +51,9 @@ public interface Links {
     String NAME_PLAYER = "{namePlayer}";
     String LASTNAME_PLAYER = "{lastnamePlayer}";
 
+    /**
+     * Enlaces para las rutas de acceso para el controlador de CHAMPIONSHIP
+     */
+
+    String CHAMPIONSHIP = ROUTE + "championship";
 }

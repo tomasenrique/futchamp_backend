@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import static futchamp.contants.Keys.*;
+import static futchamp.contants.Links.CHAMPIONSHIP;
 import static javax.persistence.CascadeType.*;
 
 @Entity
@@ -36,9 +37,9 @@ public class Match extends Auditable implements Serializable {
     @JoinColumn(name = ID_TEAM_VISITOR, foreignKey = @ForeignKey(name = FK_TEAM_MATCH_VISITOR), nullable = false)
     private Team visitor;
 
-    @ManyToOne(targetEntity = Calendar.class, fetch = FetchType.EAGER, cascade = {DETACH, MERGE, PERSIST, PERSIST})
-    @JoinColumn(name = ID_CALENDAR, foreignKey = @ForeignKey(name = FK_CALENDAR_MATCH), nullable = false)
-    private Calendar calendar;
+    @ManyToOne(targetEntity = Championship.class, fetch = FetchType.EAGER, cascade = {DETACH, MERGE, PERSIST, PERSIST})
+    @JoinColumn(name = ID_CHAMPIONSHIP, foreignKey = @ForeignKey(name = FK_CHAMPIONSHIP_MATCH), nullable = false)
+    private Championship championship;
 
 
     // Builder
@@ -92,5 +93,13 @@ public class Match extends Auditable implements Serializable {
 
     public void setVisitor(Team visitor) {
         this.visitor = visitor;
+    }
+
+    public Championship getChampionship() {
+        return championship;
+    }
+
+    public void setChampionship(Championship championship) {
+        this.championship = championship;
     }
 }

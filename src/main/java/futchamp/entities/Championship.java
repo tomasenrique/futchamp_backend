@@ -8,11 +8,11 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-import static futchamp.contants.Keys.MAPPEDBY_CALENDAR;
+import static futchamp.contants.Keys.MAPPEDBY_CHAMPIONSHIP;
 import static javax.persistence.CascadeType.*;
 
 @Entity
-public class Calendar extends Auditable implements Serializable {
+public class Championship extends Auditable implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,12 +28,12 @@ public class Calendar extends Auditable implements Serializable {
     // Relacion entre entidades
 
     // Relacion 1:N hacia Match(matches en BD)
-    @OneToMany(mappedBy = MAPPEDBY_CALENDAR, cascade = {DETACH, MERGE, PERSIST, REFRESH}, fetch = FetchType.LAZY, targetEntity = Match.class)
+    @OneToMany(mappedBy = MAPPEDBY_CHAMPIONSHIP, cascade = {DETACH, MERGE, PERSIST, REFRESH}, fetch = FetchType.LAZY, targetEntity = Match.class)
     private List<Match> matchList;
 
 
     // Builder
-    public Calendar() {
+    public Championship() {
     }
 
     // Setter and getter
@@ -67,13 +67,5 @@ public class Calendar extends Auditable implements Serializable {
 
     public void setTime(LocalTime time) {
         this.time = time;
-    }
-
-    public List<Match> getMatchList() {
-        return matchList;
-    }
-
-    public void setMatchList(List<Match> matchList) {
-        this.matchList = matchList;
     }
 }

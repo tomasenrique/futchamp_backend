@@ -12,7 +12,7 @@ public interface Keys {
     String MAPPEDBY_TEAM = "team";
     String MAPPEDBY_TEAM_LOCAL = "local";
     String MAPPEDBY_TEAM_VISITOR = "visitor";
-    String MAPPEDBY_CALENDAR = "calendar";
+    String MAPPEDBY_CHAMPIONSHIP = "championship";
 
 
     /**
@@ -22,7 +22,7 @@ public interface Keys {
     String ID_TEAM = "id_team";
     String ID_TEAM_LOCAL= "id_team_local";
     String ID_TEAM_VISITOR= "id_team_visitor";
-    String ID_CALENDAR= "id_calendar";
+    String ID_CHAMPIONSHIP= "id_championship";
 
     /**
      * Claves foraneas para las relaciones entre las entidades
@@ -32,7 +32,7 @@ public interface Keys {
     String FK_TEAM_PLAYER = "fk_team_player";
     String FK_TEAM_MATCH_LOCAL = "fk_team_match_local";
     String FK_TEAM_MATCH_VISITOR = "fk_team_match_visitor";
-    String FK_CALENDAR_MATCH = "fk_calendar_match";
+    String FK_CHAMPIONSHIP_MATCH = "fk_championship_match";
 
 
 }
