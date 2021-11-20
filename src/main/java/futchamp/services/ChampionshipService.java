@@ -1,14 +1,8 @@
 package futchamp.services;
 
-import futchamp.DAO.ChampionshipDAO;
-import futchamp.DAO.LeagueDAO;
-import futchamp.DAO.MatchDAO;
-import futchamp.DAO.TeamDAO;
+import futchamp.DAO.*;
 import futchamp.converters.ChampionshipConverter;
-import futchamp.entities.Championship;
-import futchamp.entities.League;
-import futchamp.entities.Match;
-import futchamp.entities.Team;
+import futchamp.entities.*;
 import futchamp.generics.GService;
 import futchamp.models.ChampionshipModel;
 import futchamp.serviceSI.ChampionshipSI;
@@ -30,19 +24,11 @@ import java.util.List;
 import static futchamp.contants.Converters.CON_CHAMPIONSHIP;
 import static futchamp.contants.Qualifiers.SER_CHAMPIONSHIP;
 import static futchamp.contants.Repositories.*;
-import static futchamp.contants.Texts.LOADING_LIST;
 
 @Service(SER_CHAMPIONSHIP)
 public class ChampionshipService implements GService<ChampionshipModel, Championship>, ChampionshipSI {
 
     private static final Logger logChampionshipService = LoggerFactory.getLogger(ChampionshipService.class);
-
-    private static Match[][] ida, vuelta; // Para generar los partidos entre los equipos
-    private static int[][] matriz1, matriz2; //
-    private static int n; // Numero de equipos disponibles
-
-    // private static Match[][] going, returning; // Para generar los partidos entre los equipos
-    // private static int[][] matrix1, matrix2; //
 
     @Autowired
     @Qualifier(DAO_CHAMPIONSHIP)
@@ -64,6 +50,11 @@ public class ChampionshipService implements GService<ChampionshipModel, Champion
     @Qualifier(DAO_MATCH)
     private MatchDAO matchDAO; // Para realizar CRUD a la base de datos de MATCH(matches en BD)
 
+    @Autowired
+    @Qualifier(DAO_SCOREBOARD)
+    private ScoreboardDAO scoreboardDAO; // Para realizar CRUD a la base de datos de SCOREBOARD
+
+
     // MÉTODOS GENERICOS
     @Override
     public ResponseEntity<Championship> addElementListG(Championship element) {
@@ -73,11 +64,10 @@ public class ChampionshipService implements GService<ChampionshipModel, Champion
                 List<Team> teamList = teamDAO.findTeamByLeague(league);
                 if (!teamList.isEmpty()) {
                     List<Match> matchList = generateChampionshipsSI(teamList, element); // Genera los partidos
-
                     if (!matchList.isEmpty()) {
                         matchDAO.saveAll(matchList); // Guarda los partidos
                         logChampionshipService.info("Partidos generados y guardados.");
-                        // TODO ==>> aqui hay que ver como agregar los marcadores a cero
+                        startScoreboard(); // Inicializando marcador de partidos generados
                         championshipDAO.save(element); // Guarda el campeonato
                         logChampionshipService.info("Campeonado guardado.");
                     } else {
@@ -278,6 +268,31 @@ public class ChampionshipService implements GService<ChampionshipModel, Champion
             for (int j = 0; j < numberTeams / 2; j++) {
                 matches.add(soccerMatch[i][j]);
             }
+        }
+    }
+
+    @Override
+    public void startScoreboard() {
+        try {
+            List<Match> matchList = matchDAO.findAll();
+            if (!matchList.isEmpty()) {
+                List<Scoreboard> scoreboardList = new ArrayList<>();
+                for (Match match : matchList) {
+                    if (scoreboardDAO.existsScoreboardByMatch(match)) {
+                        logChampionshipService.info("Marcador de partido ya iniciado: " + match.getId());
+                    } else {
+                        logChampionshipService.info("Marcador de partido iniciado: " + match.getId());
+                        scoreboardList.add(new Scoreboard(0, 0, match));
+                    }
+                }
+                scoreboardDAO.saveAll(scoreboardList); // Se guarda los marcadores inicializados
+                logChampionshipService.info("Inicializado marcadores de partidos.");
+            } else {
+                logChampionshipService.info("Lista de partidos vacia. No se puede iniciar marcadores.");
+            }
+        } catch (Exception e) {
+            logChampionshipService.info("CATCH: Error al obtener la lista de partidos: " + e.getMessage());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CATCH: Error al obtener la lista de partidos: " + e.getMessage());
         }
     }
 

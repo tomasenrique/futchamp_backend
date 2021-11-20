@@ -27,19 +27,24 @@ public class Match extends Auditable implements Serializable {
 
     // Relacion entre entidades
 
-    // Realación N:1 desde Team (Partido local)
+    // Relación N:1 desde Team (Partido local)
     @ManyToOne(targetEntity = Team.class, fetch = FetchType.EAGER, cascade = {DETACH, MERGE, PERSIST, REFRESH})
     @JoinColumn(name = ID_TEAM_LOCAL, foreignKey = @ForeignKey(name = FK_TEAM_MATCH_LOCAL), nullable = false)
     private Team local;
 
-    // Realación N:1 desde Team (Partido visitor)
+    // Relación N:1 desde Team (Partido visitor)
     @ManyToOne(targetEntity = Team.class, fetch = FetchType.EAGER, cascade = {DETACH, MERGE, PERSIST, REFRESH})
     @JoinColumn(name = ID_TEAM_VISITOR, foreignKey = @ForeignKey(name = FK_TEAM_MATCH_VISITOR), nullable = false)
     private Team visitor;
 
+    // Relación N:1 desde Championship
     @ManyToOne(targetEntity = Championship.class, fetch = FetchType.EAGER, cascade = {DETACH, MERGE, PERSIST, PERSIST})
     @JoinColumn(name = ID_CHAMPIONSHIP, foreignKey = @ForeignKey(name = FK_CHAMPIONSHIP_MATCH), nullable = false)
     private Championship championship;
+
+    // Relación 1:1 hacia Scoreboard (marcador)
+    @OneToOne(mappedBy = MAPPEDBY_MATCH, cascade = {DETACH, MERGE, PERSIST,REFRESH}, fetch = FetchType.LAZY, targetEntity = Scoreboard.class)
+    private Scoreboard scoreboard;
 
 
     // Builder

@@ -22,7 +22,7 @@ public interface TeamDAO extends JpaRepository<Team, Serializable> {
     Team findTeamByName(String name);
 
     /**
-     * Devuelve una lista de equipos de una misla league
+     * Devuelve una lista de equipos de una misma league
      *
      * @param league Sera el dato de tipo objeto League
      * @return Sera una lista de equipos(Teams) de una misma league.
