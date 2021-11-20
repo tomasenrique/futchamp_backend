@@ -5,10 +5,7 @@ import futchamp.services.ChampionshipService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static futchamp.contants.Links.CHAMPIONSHIP;
 import static futchamp.contants.Links.SLASH;
@@ -23,7 +20,7 @@ public class ChampionshipController {
     private ChampionshipService championshipService;
 
 
-    @PatchMapping(SLASH)
+    @PostMapping(SLASH)
     public ResponseEntity<Championship> addChampionship(@RequestBody Championship championship) {
         return championshipService.addElementListG(championship);
     }

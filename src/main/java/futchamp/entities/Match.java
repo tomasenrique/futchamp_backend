@@ -46,6 +46,11 @@ public class Match extends Auditable implements Serializable {
     public Match() {
     }
 
+    public Match(Team local, Team visitor) {
+        this.local = local;
+        this.visitor = visitor;
+    }
+
     // Getter and setter
     public Long getId() {
         return id;
