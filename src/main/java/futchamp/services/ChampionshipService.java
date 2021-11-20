@@ -30,6 +30,7 @@ import java.util.List;
 import static futchamp.contants.Converters.CON_CHAMPIONSHIP;
 import static futchamp.contants.Qualifiers.SER_CHAMPIONSHIP;
 import static futchamp.contants.Repositories.*;
+import static futchamp.contants.Texts.LOADING_LIST;
 
 @Service(SER_CHAMPIONSHIP)
 public class ChampionshipService implements GService<ChampionshipModel, Championship>, ChampionshipSI {
@@ -97,21 +98,25 @@ public class ChampionshipService implements GService<ChampionshipModel, Champion
         }
     }
 
-
     @Override
     public ResponseEntity<List<ChampionshipModel>> getAllElementListG() {
         try {
-
-
+            List<ChampionshipModel> championshipModelList = championshipConverter.converterListG(championshipDAO.findAll());
+            if (championshipModelList.isEmpty()) {
+                logChampionshipService.info("Lista de campeonatos encontrada.");
+            } else {
+                logChampionshipService.info("Lista de campeonatos vacia.");
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(championshipModelList);
         } catch (Exception e) {
             logChampionshipService.info("CATCH: Error al obtener los campeonatos: " + e.getMessage());
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CATCH: Error al obtener los campeonatos: " + e.getMessage());
         }
-        return null;
     }
 
     @Override
     public ResponseEntity<Championship> updateElementListG(Championship element) {
+        // TODO ==>> OJO, aqui si se cambia un dato tambien habria que actualizar los datos de los partidos generados
         return null;
     }
 

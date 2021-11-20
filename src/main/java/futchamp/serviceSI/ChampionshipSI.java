@@ -23,8 +23,6 @@ public interface ChampionshipSI {
      */
     List<Match> generateChampionshipsSI(List<Team> teamList, Championship championship);
 
-
-
     /**
      * Genera y ordena los encuentros de fulbol
      * Se rellenan las matrices auxiliares
@@ -44,7 +42,6 @@ public interface ChampionshipSI {
      * @param numberTeams Sera la cantidad de equipos disponibles
      */
     void generatingAndOrderingMatchesSI(List<Team> teamList, int[][] matrix1, int[][] matrix2, Match[][] going, Match[][] returning, int numberTeams);
-
 
     /**
      * Aqui se agrega la jornada a la que pertenece cada par de partidos generados
