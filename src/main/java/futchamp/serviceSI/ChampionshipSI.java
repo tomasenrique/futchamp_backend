@@ -34,7 +34,6 @@ public interface ChampionshipSI {
      */
     ResponseEntity<ChampionshipModel> getChampioshipByNameleagueAndDateSI(String nameLeague, LocalDate dateStartShampionship);
 
-
     /**
      * Genera y ordena los encuentros de fulbol
      * Se rellenan las matrices auxiliares

@@ -57,4 +57,17 @@ public interface Links {
 
     String CHAMPIONSHIP = ROUTE + "championship";
     String ID_CHAMPIONSHIP = "{idChampionship}";
+
+    /**
+     * Enlaces para las rutas de acceso para el controlador de SCOREBOARD
+     */
+    String SCOREBOARD = ROUTE + "scoreboard";
+
+
+    /**
+     * Enlaces para las rutas de acceso para el controlador de MATCH
+     */
+    String MATCH = ROUTE + "match";
+
+
 }

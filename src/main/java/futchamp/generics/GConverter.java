@@ -26,8 +26,8 @@ public interface GConverter<M, E> {
      * Este metodo generico sirve para convertir un elemento de tipo entidad a modelo para poder trabajar con las
      * clases services y controllers
      *
-     * @param elemento Sera un elemento de tipo entidad a convertir a modelo
+     * @param element Sera un elemento de tipo entidad a convertir a modelo
      * @return Objeto elemento de tipo modelo
      */
-    M converterElementG(E elemento);
+    M converterElementG(E element);
 }

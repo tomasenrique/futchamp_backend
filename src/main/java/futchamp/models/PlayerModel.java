@@ -4,6 +4,7 @@ import futchamp.entities.Player;
 import futchamp.entities.Team;
 
 import java.io.Serializable;
+import java.util.Calendar;
 
 public class PlayerModel implements Serializable {
 
@@ -16,6 +17,8 @@ public class PlayerModel implements Serializable {
     private String position;
     private Byte dorsal;
     private Team team;
+    private Calendar createdAt;
+    private Calendar updatedAt;
 
     // Builder
     public PlayerModel(Player player) {
@@ -28,6 +31,8 @@ public class PlayerModel implements Serializable {
         this.position = player.getPosition();
         this.dorsal = player.getDorsal();
         this.team = player.getTeam();
+        this.createdAt = player.getCreatedAt();
+        this.updatedAt = player.getUpdatedAt();
     }
 
     // Setter and getter
@@ -101,5 +106,21 @@ public class PlayerModel implements Serializable {
 
     public void setTeam(Team team) {
         this.team = team;
+    }
+
+    public Calendar getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Calendar createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Calendar getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Calendar updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }
