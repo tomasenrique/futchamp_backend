@@ -3,6 +3,8 @@ package futchamp.serviceSI;
 import futchamp.entities.Championship;
 import futchamp.entities.Match;
 import futchamp.entities.Team;
+import futchamp.models.ChampionshipModel;
+import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -22,6 +24,16 @@ public interface ChampionshipSI {
      * @return Sera una lista de partidos generados para los encuentros entre estos.
      */
     List<Match> generateChampionshipsSI(List<Team> teamList, Championship championship);
+
+    /**
+     * Obtiene un registro de un campeonato por medio de su nombre de league y fecha de inicio
+     *
+     * @param nameLeague            Sera el nombre de la league que crea el campeonato
+     * @param dateStartShampionship Sera la fecha de inicio del campeonato
+     * @return Sera el Objeto de tipo modelo ChampionshipModel con los datos del campeonato
+     */
+    ResponseEntity<ChampionshipModel> getChampioshipByNameleagueAndDateSI(String nameLeague, LocalDate dateStartShampionship);
+
 
     /**
      * Genera y ordena los encuentros de fulbol

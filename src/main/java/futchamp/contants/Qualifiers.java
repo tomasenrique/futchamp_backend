@@ -10,5 +10,5 @@ public interface Qualifiers {
     String SER_LEAGUE = "service_league";
     String SER_TEAM = "service_team";
     String SER_PLAYER = "service_player";
-    String SER_CHAMPIONSHIP = "service_championchip";
+    String SER_CHAMPIONSHIP = "service_championship";
 }

@@ -33,6 +33,10 @@ public class ChampionshipController {
     }
 
 
+    @GetMapping(SLASH + REGISTER)
+    public ResponseEntity<ChampionshipModel> getChampionshipByLeagueAndDate(@RequestBody Championship championship) {
+        return championshipService.getChampioshipByNameleagueAndDateSI(championship.getNameLeague(), championship.getDate());
+    }
 
 
     @DeleteMapping(SLASH + ID_CHAMPIONSHIP)

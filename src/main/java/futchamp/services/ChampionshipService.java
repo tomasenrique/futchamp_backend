@@ -19,6 +19,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import static futchamp.contants.Converters.CON_CHAMPIONSHIP;
@@ -172,6 +173,24 @@ public class ChampionshipService implements GService<ChampionshipModel, Champion
             logChampionshipService.info("Lista de equipos impares, no se puede generar campeonato.");
         }
         return matchList;
+    }
+
+    @Override
+    public ResponseEntity<ChampionshipModel> getChampioshipByNameleagueAndDateSI(String nameLeague, LocalDate dateStartShampionship) {
+        try {
+            if (championshipDAO.existsChampioshipBynameLeagueAndDate(nameLeague, dateStartShampionship)) {
+                ChampionshipModel championshipModel = championshipConverter.converterElementG(championshipDAO.findChampioshipBynameLeagueAndDate(nameLeague, dateStartShampionship));
+                logChampionshipService.info("Campeonato encontrado.");
+                return ResponseEntity.status(HttpStatus.OK).body(championshipModel);
+            } else {
+                logChampionshipService.info("ELSE: no existe el campeonato buscado.");
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ELSE: no existe el campeonato buscado.");
+            }
+        } catch (Exception e) {
+            logChampionshipService.info("CATCH: Error al buscar el campeonato: " + e.getMessage());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CATCH: Error al buscar el campeonato: " + e.getMessage());
+        }
+//        return null;
     }
 
     @Override
