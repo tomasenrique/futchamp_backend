@@ -99,9 +99,4 @@ public interface ChampionshipSI {
      */
     void addMatchListMatchesSI(Match[][] soccerMatch, List<Match> matches, int numberTeams);
 
-    /**
-     * Inicializa los marcadores(Scoreboard) de los partidos que no lo tengan
-     */
-    void startScoreboard();
-
 }

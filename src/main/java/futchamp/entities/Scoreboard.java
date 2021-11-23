@@ -23,7 +23,7 @@ public class Scoreboard extends Auditable implements Serializable {
     // Relacion entre entidades
 
     // Relación 1:1 desde Match (matches ne BD)
-    @OneToOne(targetEntity = Match.class, fetch = FetchType.EAGER, cascade = {DETACH, MERGE, PERSIST, REFRESH})
+    @OneToOne(targetEntity = Match.class, fetch = FetchType.EAGER, cascade = {ALL})
     @JoinColumn(name = ID_MATCH, foreignKey = @ForeignKey(name = FK_MATCH_SCOREBOARD), nullable = false)
     private Match match;
 

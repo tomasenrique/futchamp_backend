@@ -27,9 +27,17 @@ public class ChampionshipController {
         return championshipService.addElementListG(championship);
     }
 
-    @GetMapping(SLASH+ LIST)
+    @GetMapping(SLASH + LIST)
     public ResponseEntity<List<ChampionshipModel>> getAllChampionships() {
         return championshipService.getAllElementListG();
+    }
+
+
+
+
+    @DeleteMapping(SLASH + ID_CHAMPIONSHIP)
+    public ResponseEntity<?> deletedChampionship(@PathVariable Long idChampionship) {
+        return championshipService.deleteElementListG(idChampionship);
     }
 
 

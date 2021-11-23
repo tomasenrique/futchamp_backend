@@ -28,7 +28,7 @@ public class Championship extends Auditable implements Serializable {
     // Relacion entre entidades
 
     // Relacion 1:N hacia Match(matches en BD)
-    @OneToMany(mappedBy = MAPPEDBY_CHAMPIONSHIP, cascade = {DETACH, MERGE, PERSIST, REFRESH}, fetch = FetchType.LAZY, targetEntity = Match.class)
+    @OneToMany(mappedBy = MAPPEDBY_CHAMPIONSHIP, cascade = {ALL}, fetch = FetchType.LAZY, targetEntity = Match.class)
     private List<Match> matchList;
 
 

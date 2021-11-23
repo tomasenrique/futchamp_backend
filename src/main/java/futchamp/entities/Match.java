@@ -43,7 +43,8 @@ public class Match extends Auditable implements Serializable {
     private Championship championship;
 
     // Relación 1:1 hacia Scoreboard (marcador)
-    @OneToOne(mappedBy = MAPPEDBY_MATCH, cascade = {DETACH, MERGE, PERSIST,REFRESH}, fetch = FetchType.LAZY, targetEntity = Scoreboard.class)
+    @OneToOne(mappedBy = MAPPEDBY_MATCH, cascade = {ALL}, fetch = FetchType.LAZY, targetEntity = Scoreboard.class)
+
     private Scoreboard scoreboard;
 
 

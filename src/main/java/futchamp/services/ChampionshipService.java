@@ -64,10 +64,14 @@ public class ChampionshipService implements GService<ChampionshipModel, Champion
                 List<Team> teamList = teamDAO.findTeamByLeague(league);
                 if (!teamList.isEmpty()) {
                     List<Match> matchList = generateChampionshipsSI(teamList, element); // Genera los partidos
+                    logChampionshipService.info("Lista de partidos generados..");
                     if (!matchList.isEmpty()) {
-                        matchDAO.saveAll(matchList); // Guarda los partidos
-                        logChampionshipService.info("Partidos generados y guardados.");
-                        startScoreboard(); // Inicializando marcador de partidos generados
+                        logChampionshipService.info("Guardado partidos.");
+                        for (Match m : matchList) {
+                            scoreboardDAO.save(new Scoreboard(0, 0, matchDAO.save(m))); // Se inicializa el marcador y se guarda el partido
+                            logChampionshipService.info("Inicializado marcador de partido: " + m.getId());
+                        }
+                        logChampionshipService.info("Partidos guardados.");
                         championshipDAO.save(element); // Guarda el campeonato
                         logChampionshipService.info("Campeonado guardado.");
                     } else {
@@ -112,7 +116,21 @@ public class ChampionshipService implements GService<ChampionshipModel, Champion
 
     @Override
     public ResponseEntity<?> deleteElementListG(Long idElement) {
-        return null;
+        try {
+            if (championshipDAO.existsById(idElement)) {
+                logChampionshipService.info("Campeonato encontrado.");
+                Championship championship = championshipDAO.findById(idElement).get();
+                championshipDAO.delete(championship);
+                logChampionshipService.info("Campeonato de futbol eliminado.");
+                return ResponseEntity.status(HttpStatus.OK).body(championship);
+            } else {
+                logChampionshipService.info("ELSE: No existe el campoeonato a eliminar.");
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ELSE: No existe el campoeonato a eliminar.");
+            }
+        } catch (Exception e) {
+            logChampionshipService.info("CATCH: Error al eliminar el campeonato: " + e.getMessage());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CATCH: Error al eliminar el campeonato: " + e.getMessage());
+        }
     }
 
 
@@ -270,31 +288,4 @@ public class ChampionshipService implements GService<ChampionshipModel, Champion
             }
         }
     }
-
-    @Override
-    public void startScoreboard() {
-        try {
-            List<Match> matchList = matchDAO.findAll();
-            if (!matchList.isEmpty()) {
-                List<Scoreboard> scoreboardList = new ArrayList<>();
-                for (Match match : matchList) {
-                    if (scoreboardDAO.existsScoreboardByMatch(match)) {
-                        logChampionshipService.info("Marcador de partido ya iniciado: " + match.getId());
-                    } else {
-                        logChampionshipService.info("Marcador de partido iniciado: " + match.getId());
-                        scoreboardList.add(new Scoreboard(0, 0, match));
-                    }
-                }
-                scoreboardDAO.saveAll(scoreboardList); // Se guarda los marcadores inicializados
-                logChampionshipService.info("Inicializado marcadores de partidos.");
-            } else {
-                logChampionshipService.info("Lista de partidos vacia. No se puede iniciar marcadores.");
-            }
-        } catch (Exception e) {
-            logChampionshipService.info("CATCH: Error al obtener la lista de partidos: " + e.getMessage());
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CATCH: Error al obtener la lista de partidos: " + e.getMessage());
-        }
-    }
-
-
 }

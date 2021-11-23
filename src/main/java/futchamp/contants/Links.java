@@ -56,4 +56,5 @@ public interface Links {
      */
 
     String CHAMPIONSHIP = ROUTE + "championship";
+    String ID_CHAMPIONSHIP = "{idChampionship}";
 }
