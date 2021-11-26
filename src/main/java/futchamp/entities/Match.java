@@ -7,8 +7,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import static futchamp.contants.DataType.TINYINT;
 import static futchamp.contants.Keys.*;
-import static futchamp.contants.Links.CHAMPIONSHIP;
 import static javax.persistence.CascadeType.*;
 
 @Entity
@@ -19,11 +19,12 @@ public class Match extends Auditable implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDate date; // Fecha del partido
+    private LocalDate date;
 
-    private LocalTime time; // Hora de inicio
+    private LocalTime time;
 
-    private Integer journey; // sera el numero de la jornada en donde se encuentra el partido
+    @Column(columnDefinition = TINYINT)
+    private Integer journey;
 
     // Relacion entre entidades
 
@@ -44,7 +45,6 @@ public class Match extends Auditable implements Serializable {
 
     // Relación 1:1 hacia Scoreboard (marcador)
     @OneToOne(mappedBy = MAPPEDBY_MATCH, cascade = {ALL}, fetch = FetchType.LAZY, targetEntity = Scoreboard.class)
-
     private Scoreboard scoreboard;
 
 

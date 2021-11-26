@@ -1,6 +1,5 @@
 package futchamp.models;
 
-import futchamp.entities.Championship;
 import futchamp.entities.Match;
 import futchamp.entities.Scoreboard;
 
@@ -10,8 +9,9 @@ import java.util.Calendar;
 public class ScoreboardModel implements Serializable {
 
     private Long id;
-    private Integer local;
-    private Integer visitor;
+    private Integer local; // puntuación de equipo local
+    private Integer visitor; // puntuación de equipo visitante
+    private Boolean realized; // Indica si el partido ya se realizo
     private Match match;
     private Calendar createdAt;
     private Calendar updatedAt;
@@ -21,6 +21,7 @@ public class ScoreboardModel implements Serializable {
         this.id = scoreboard.getId();
         this.local = scoreboard.getLocal();
         this.visitor = scoreboard.getVisitor();
+        this.realized = scoreboard.getRealized();
         this.match = scoreboard.getMatch();
         this.createdAt = scoreboard.getCreatedAt();
         this.updatedAt = scoreboard.getUpdatedAt();
@@ -49,6 +50,14 @@ public class ScoreboardModel implements Serializable {
 
     public void setVisitor(Integer visitor) {
         this.visitor = visitor;
+    }
+
+    public Boolean getRealized() {
+        return realized;
+    }
+
+    public void setRealized(Boolean realized) {
+        this.realized = realized;
     }
 
     public Match getMatch() {

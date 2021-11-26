@@ -68,7 +68,7 @@ public class ChampionshipService implements GService<ChampionshipModel, Champion
                     if (!matchList.isEmpty()) {
                         logChampionshipService.info("Guardado partidos.");
                         for (Match m : matchList) {
-                            scoreboardDAO.save(new Scoreboard(0, 0, matchDAO.save(m))); // Se inicializa el marcador y se guarda el partido
+                            scoreboardDAO.save(new Scoreboard(0, 0, false, matchDAO.save(m))); // Se inicializa el marcador y se guarda el partido
                             logChampionshipService.info("Inicializado marcador de partido: " + m.getId());
                         }
                         logChampionshipService.info("Partidos guardados.");
@@ -189,7 +189,6 @@ public class ChampionshipService implements GService<ChampionshipModel, Champion
             logChampionshipService.info("CATCH: Error al buscar el campeonato: " + e.getMessage());
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CATCH: Error al buscar el campeonato: " + e.getMessage());
         }
-//        return null;
     }
 
     @Override

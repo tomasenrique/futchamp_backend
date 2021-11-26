@@ -14,7 +14,7 @@ public class MatchModel implements Serializable {
     private Long id;
     private LocalDate date; // Fecha del partido
     private LocalTime time; // Hora de inicio
-    private Integer journey; // sera el numero de la jornada en donde se encuentra el partido
+    private Integer journey; // Sera el numero de la jornada en donde se encuentra el partido
     private Team local;
     private Team visitor;
     private Championship championship;

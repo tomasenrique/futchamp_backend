@@ -1,6 +1,5 @@
 package futchamp.controllers;
 
-
 import futchamp.entities.League;
 import futchamp.models.LeagueModel;
 import futchamp.services.LeagueService;

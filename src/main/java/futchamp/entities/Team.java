@@ -1,6 +1,5 @@
 package futchamp.entities;
 
-
 import futchamp.configuration.auditable.Auditable;
 
 import javax.persistence.*;
@@ -41,6 +40,10 @@ public class Team extends Auditable implements Serializable {
     // Relación 1:N hacia Match (Partido visitor)
     @OneToMany(mappedBy = MAPPEDBY_TEAM_VISITOR, cascade = {MERGE, DETACH, PERSIST, REFRESH}, fetch = LAZY, targetEntity = Match.class)
     private List<Team> teamListVisitor;
+
+    // Relación 1:1 hacia Ranking (tabla)
+    @OneToOne(mappedBy = MAPPEDBY_TEAM,  cascade = {ALL}, fetch = LAZY, targetEntity = Ranking.class)
+    private Ranking ranking;
 
 
     // Builder

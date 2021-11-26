@@ -1,11 +1,11 @@
 package futchamp.entities;
 
-
 import futchamp.configuration.auditable.Auditable;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
+import static futchamp.contants.DataType.TINYINT;
 import static futchamp.contants.Keys.FK_TEAM_PLAYER;
 import static futchamp.contants.Keys.ID_TEAM;
 import static javax.persistence.CascadeType.*;
@@ -34,6 +34,7 @@ public class Player extends Auditable implements Serializable {
     @Column(length = 150)
     private String position;
 
+    @Column(nullable = false, columnDefinition = TINYINT)
     private Byte dorsal;
 
     // Relacion entre entidades

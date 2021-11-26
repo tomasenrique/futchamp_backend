@@ -2,7 +2,6 @@ package futchamp.converters;
 
 import futchamp.entities.Player;
 import futchamp.generics.GConverter;
-import futchamp.models.LeagueModel;
 import futchamp.models.PlayerModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

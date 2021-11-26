@@ -67,7 +67,7 @@ public class MatchService implements GService<MatchModel, Match> {
                     element.setVisitor(visitor);
                     element.setChampionship(championship);
                     logMatchService.info("Guardando partido en el campeonato e inicializado marcador.");
-                    scoreboardDAO.save(new Scoreboard(0, 0, matchDAO.save(element))); // Se inicializa el marcador y se guarda el partido
+                    scoreboardDAO.save(new Scoreboard(0, 0, false, matchDAO.save(element))); // Se inicializa el marcador y se guarda el partido
                     logMatchService.info("Partido guardado.");
                     return ResponseEntity.status(HttpStatus.OK).body(element);
                 } else {

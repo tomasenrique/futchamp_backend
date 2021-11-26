@@ -1,6 +1,5 @@
 package futchamp.controllers;
 
-
 import futchamp.entities.Coordinator;
 import futchamp.models.CoordinatorModel;
 import futchamp.services.CoordinatorService;
