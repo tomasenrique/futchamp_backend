@@ -53,6 +53,8 @@ public class MatchService implements GService<MatchModel, Match> {
     private ScoreboardDAO scoreboardDAO; // Para realizar CRUD a la base de datos de SCOREBOARD
 
 
+    // MÉTODOS GENERICOS
+
     @Override
     public ResponseEntity<Match> addElementListG(Match element) {
         try {
@@ -107,6 +109,21 @@ public class MatchService implements GService<MatchModel, Match> {
 
     @Override
     public ResponseEntity<?> deleteElementListG(Long idElement) {
-        return null;
+        try {
+            if (matchDAO.existsById(idElement)) {
+                Match match = matchDAO.findById(idElement).get();
+                logMatchService.info("Partido encontrado y eliminado.");
+                matchDAO.delete(match);
+                return ResponseEntity.status(HttpStatus.OK).body(match);
+            } else {
+                logMatchService.info("No existe el partido a eliminar.");
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No existe el partido a eliminar.");
+            }
+        } catch (Exception e) {
+            logMatchService.info("CATCH: Error al eliminar el partido: " + e.getMessage());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CATCH: Error al eliminar el partido: " + e.getMessage());
+        }
     }
+
+    // MÉTODOS NO GENERICOS
 }

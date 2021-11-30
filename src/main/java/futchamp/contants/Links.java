@@ -68,6 +68,7 @@ public interface Links {
      * Enlaces para las rutas de acceso para el controlador de MATCH
      */
     String MATCH = ROUTE + "match";
+    String ID_MATCH = "{idMatch}";
 
 
 }

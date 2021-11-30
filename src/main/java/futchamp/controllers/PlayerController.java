@@ -52,7 +52,7 @@ public class PlayerController {
         return playerService.updateElementListG(player);
     }
 
-    @DeleteMapping(SLASH + ID_PLAYER )
+    @DeleteMapping(SLASH + ID_PLAYER)
     public ResponseEntity<?> deletePlayer(@PathVariable Long idPLayer) {
         return playerService.deleteElementListG(idPLayer);
     }
